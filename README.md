@@ -7,6 +7,7 @@
 - `AGENTS.md`
 - `.claude/README.md`
 - `.claude/project-architecture.md`
+- `.claude/skill-authoring.md`
 - `.claude/bug-fix-log.md`
 - `.claude/git-collaboration.md`
 - `.claude/tech-stack.md`
@@ -77,6 +78,31 @@ python3 scripts/init_agent_docs.py \
   --dry-run
 ```
 
+### 可选安装 skills
+
+默认安装只生成协作文档，不会安装任何 skill。查看可选 profile 和 skill：
+
+```bash
+init-agent-docs --list-skills
+```
+
+安装本项目维护的 `core` skills：
+
+```bash
+init-agent-docs \
+  --project-name my-project \
+  --description "这是一个示例项目" \
+  --with-skills core
+```
+
+skills 会写入目标项目的：
+
+```text
+.agents/skills/
+```
+
+已有 skill 文件默认跳过。如需覆盖，显式添加 `--force`。当前仅内置本项目维护的 `core` profile，第三方开源 skills 应先进入 registry 审计、锁定版本和许可证后再提供安装入口。
+
 ## 模板位置
 
 模板文件位于：
@@ -95,6 +121,7 @@ templates/agent-docs/
 
 - 修改脚手架输出内容时，优先修改 `templates/agent-docs/`。
 - 修改初始化行为时，更新 `scripts/init_agent_docs.py`。
+- 修改内置 skills 或 registry 时，同步更新 `skills/registry.json` 和 `.claude/skill-authoring.md`。
 - 修改安装行为时，更新 `install.sh`。
 - 调整项目架构或技术规范时，同步更新 `.claude/` 中的长期文档。
 
@@ -105,3 +132,4 @@ templates/agent-docs/
 - 非 `GET` / `HEAD` 请求会被 nginx 拒绝。
 - 统计事件最多保留 20,000 条，最多保留 180 天。
 - dashboard 中展示的 IP 会脱敏，完整 IP 仅保存在服务器 SQLite 数据库中用于归属地解析和去重。
+- 第三方 skills 不应默认安装；安装前必须审计 `SKILL.md`、脚本、外部网络访问、文件写入、许可证和版本锁定信息。

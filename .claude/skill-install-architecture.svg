@@ -1,0 +1,53 @@
+<svg width="920" height="520" viewBox="0 0 920 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">insomniac-skills skill install architecture</title>
+  <desc id="desc">Architecture diagram showing CLI initialization, templates, target project docs, core skills, registry, and optional third-party skills.</desc>
+  <rect width="920" height="520" fill="#f8fafc"/>
+  <text x="40" y="46" font-size="24" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">insomniac-skills skill 安装架构</text>
+
+  <rect x="40" y="80" width="230" height="110" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="62" y="115" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">CLI 初始化入口</text>
+  <text x="62" y="145" font-size="13" font-family="Arial, sans-serif" fill="#334155">init-agent-docs</text>
+  <text x="62" y="168" font-size="13" font-family="Arial, sans-serif" fill="#334155">默认只写协作文档</text>
+
+  <rect x="345" y="80" width="230" height="110" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="367" y="115" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">模板层</text>
+  <text x="367" y="145" font-size="13" font-family="Arial, sans-serif" fill="#334155">templates/agent-docs</text>
+  <text x="367" y="168" font-size="13" font-family="Arial, sans-serif" fill="#334155">AGENTS.md + .claude/*</text>
+
+  <rect x="650" y="80" width="230" height="110" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="672" y="115" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">目标项目</text>
+  <text x="672" y="145" font-size="13" font-family="Arial, sans-serif" fill="#334155">长期 Agent 上下文</text>
+  <text x="672" y="168" font-size="13" font-family="Arial, sans-serif" fill="#334155">可选 .agents/skills</text>
+
+  <rect x="40" y="260" width="230" height="130" rx="8" fill="#ecfeff" stroke="#0891b2"/>
+  <text x="62" y="295" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">Core Skills</text>
+  <text x="62" y="325" font-size="13" font-family="Arial, sans-serif" fill="#334155">本项目维护</text>
+  <text x="62" y="348" font-size="13" font-family="Arial, sans-serif" fill="#334155">无外部依赖</text>
+  <text x="62" y="371" font-size="13" font-family="Arial, sans-serif" fill="#334155">显式安装</text>
+
+  <rect x="345" y="260" width="230" height="130" rx="8" fill="#fefce8" stroke="#ca8a04"/>
+  <text x="367" y="295" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">Skill Registry</text>
+  <text x="367" y="325" font-size="13" font-family="Arial, sans-serif" fill="#334155">来源、版本、license</text>
+  <text x="367" y="348" font-size="13" font-family="Arial, sans-serif" fill="#334155">权限、checksum</text>
+  <text x="367" y="371" font-size="13" font-family="Arial, sans-serif" fill="#334155">profile 分组</text>
+
+  <rect x="650" y="260" width="230" height="130" rx="8" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="672" y="295" font-size="16" font-family="Arial, sans-serif" font-weight="700" fill="#0f172a">Third-party Skills</text>
+  <text x="672" y="325" font-size="13" font-family="Arial, sans-serif" fill="#334155">不默认安装</text>
+  <text x="672" y="348" font-size="13" font-family="Arial, sans-serif" fill="#334155">锁定版本下载</text>
+  <text x="672" y="371" font-size="13" font-family="Arial, sans-serif" fill="#334155">安装前安全审计</text>
+
+  <path d="M270 135 H345" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M575 135 H650" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M155 190 V260" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M460 190 V260" stroke="#ca8a04" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M765 190 V260" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M270 325 H345" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M575 325 H650" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+</svg>

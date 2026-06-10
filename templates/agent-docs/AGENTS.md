@@ -12,6 +12,7 @@
 
 - `.claude/README.md`：文档索引和维护规则。
 - `.claude/project-architecture.md`：项目架构、目录职责和扩展方式。
+- `.claude/skill-authoring.md`：项目级 skills 的编写、安装和维护规范。
 - `.claude/bug-fix-log.md`：bug 修复记录和复盘模板。
 - `.claude/git-collaboration.md`：分支、提交、PR 和代码评审规范。
 - `.claude/tech-stack.md`：项目相关技术栈、工具链和技术规范。
@@ -20,6 +21,7 @@
 
 - 先阅读本文件和 `.claude/README.md`，再修改项目结构或新增规范。
 - 修改项目结构时，同步更新 `.claude/project-architecture.md`。
+- 新增或调整项目级 skill 时，同步更新 `.claude/skill-authoring.md`。
 - 修复问题后更新 `.claude/bug-fix-log.md`，包含现象、原因、修复方式和验证结果。
 - 保持改动聚焦，避免把无关重构、格式化或命名调整混入同一个变更。
 - 记录重要决策的原因，尤其是目录结构、依赖工具、协作流程和外部服务边界的变化。

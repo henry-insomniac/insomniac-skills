@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "default_install": [],
+  "profiles": {
+    "core": {
+      "description": "本项目维护的项目级 Agent 协作基础 skills。默认无外部网络、无账号依赖、无第三方代码。",
+      "skills": [
+        "agent-docs-bootstrap",
+        "template-maintainer",
+        "skill-author",
+        "bug-fix-recorder",
+        "repo-onboarding",
+        "security-boundary-review",
+        "release-packaging",
+        "agent-handoff"
+      ]
+    }
+  },
+  "skills": [
+    {
+      "name": "agent-docs-bootstrap",
+      "profile": "core",
+      "source": "local:core/agent-docs-bootstrap",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "template-maintainer",
+      "profile": "core",
+      "source": "local:core/template-maintainer",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "skill-author",
+      "profile": "core",
+      "source": "local:core/skill-author",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "bug-fix-recorder",
+      "profile": "core",
+      "source": "local:core/bug-fix-recorder",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "repo-onboarding",
+      "profile": "core",
+      "source": "local:core/repo-onboarding",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "security-boundary-review",
+      "profile": "core",
+      "source": "local:core/security-boundary-review",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "release-packaging",
+      "profile": "core",
+      "source": "local:core/release-packaging",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    },
+    {
+      "name": "agent-handoff",
+      "profile": "core",
+      "source": "local:core/agent-handoff",
+      "version": "2026-06-10",
+      "license": "project",
+      "surfaces": ["codex", "generic"],
+      "permissions": {
+        "runs_scripts": false,
+        "network": false,
+        "writes_files": true,
+        "reads_credentials": false
+      },
+      "checksum": null,
+      "audit_status": "maintained-local"
+    }
+  ]
+}

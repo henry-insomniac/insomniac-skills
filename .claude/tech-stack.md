@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-仓库当前以 Markdown 模板和 Python 标准库脚本为主，暂无外部运行时依赖、包管理器、测试框架或构建系统。
+仓库当前以 Markdown 模板、JSON registry 和 Python 标准库脚本为主，暂无外部运行时依赖、包管理器、测试框架或构建系统。
 
 ## 文档规范
 
@@ -20,6 +20,14 @@
 - 新增占位符必须同步更新 `scripts/init_agent_docs.py` 和 `README.md`。
 - 模板内容应保持通用，不写入单个项目、账号或个人机器的真实细节。
 - 初始化脚本会跳过 `.DS_Store`、`._*` 和 `__pycache__`，避免本地系统元数据污染输出。
+
+## Skill registry 规范
+
+- 可安装 skills 位于 `skills/`。
+- `skills/registry.json` 使用 JSON，便于 `scripts/init_agent_docs.py` 只依赖 Python 标准库读取。
+- 本地 skill 来源相对 `skills/` 目录解析，使用 `local:<skills-dir-relative-path>`，例如 `local:core/agent-docs-bootstrap`。
+- registry 条目必须记录 `name`、`profile`、`source`、`version`、`license`、`surfaces`、`permissions`、`checksum` 和 `audit_status`。
+- 第三方 skills 必须锁定版本或 commit，并在安装前审计脚本、网络访问、文件写入、凭据读取和许可证。
 
 ## 脚本规范
 
@@ -73,6 +81,8 @@ git status --short
 ```bash
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --dry-run
+python3 scripts/init_agent_docs.py --list-skills
+python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --with-skills core --force
 sh install.sh
 ```
 

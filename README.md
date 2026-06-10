@@ -95,6 +95,17 @@ init-agent-docs \
   --with-skills core
 ```
 
+`core` profile 当前包含：
+
+- `agent-docs-bootstrap`：初始化或修复项目级 Agent 协作文档。
+- `template-maintainer`：维护 `templates/agent-docs/` 和生成文档契约。
+- `skill-author`：创建、更新或审查 Agent Skill。
+- `bug-fix-recorder`：修复问题后沉淀 `.claude/bug-fix-log.md`。
+- `repo-onboarding`：进入陌生仓库时做事实型项目梳理。
+- `security-boundary-review`：审查脚本、安装器、skill 和外部服务安全边界。
+- `release-packaging`：维护安装脚本、发布包和安装验证。
+- `agent-handoff`：把完成或暂停的 Agent 工作整理成交接摘要。
+
 skills 会写入目标项目的：
 
 ```text

@@ -12,6 +12,17 @@
 - `.claude/git-collaboration.md`
 - `.claude/tech-stack.md`
 
+启用 Agent 操作规则层后，还会生成：
+
+- `docs/agents/README.md`
+- `docs/agents/issue-tracker.md`
+- `docs/agents/triage-labels.md`
+- `docs/agents/domain.md`
+- `docs/agents/skill-usage.md`
+- `docs/adr/README.md`
+- `CONTEXT.md` 或 `CONTEXT-MAP.md`（`claude-only` 不生成）
+- `.scratch/README.md`（仅当 issue tracker 选择 `local`）
+
 ## 使用方式
 
 ### curl 安装
@@ -78,6 +89,34 @@ python3 scripts/init_agent_docs.py \
   --dry-run
 ```
 
+### Agent 操作规则层
+
+参考 `setup-matt-pocock-skills` 的项目配置思路，脚手架可以额外初始化 Agent 处理 issue、triage label 和领域上下文时需要读取的规则文件：
+
+```bash
+python3 scripts/init_agent_docs.py \
+  --target /path/to/project \
+  --project-name my-project \
+  --description "一个示例项目" \
+  --with-agent-ops \
+  --issue-tracker auto \
+  --domain-layout single
+```
+
+`--issue-tracker` 支持：
+
+- `manual`：默认值，不假设项目使用哪种 issue tracker，写入待确认模板。
+- `auto`：读取目标项目 `.git/config`，检测 GitHub 或 GitLab remote。
+- `github`：生成 GitHub Issues / `gh` CLI 规则。
+- `gitlab`：生成 GitLab Issues / `glab` CLI 规则。
+- `local`：生成本地 Markdown 规则，并创建 `.scratch/README.md`。
+
+`--domain-layout` 支持：
+
+- `single`：默认值，生成根目录 `CONTEXT.md`。
+- `multi`：生成根目录 `CONTEXT-MAP.md`，用于多上下文项目。
+- `claude-only`：只使用 `AGENTS.md` 和 `.claude/` 作为长期上下文，不生成 `CONTEXT.md`。
+
 ### 可选安装 skills
 
 默认安装只生成协作文档，不会安装任何 skill。查看可选 profile 和 skill：
@@ -127,6 +166,9 @@ templates/agent-docs/
 - `{{PROJECT_NAME}}`
 - `{{PROJECT_DESCRIPTION}}`
 - `{{DATE}}`
+- `{{AGENT_SKILLS_BLOCK}}`
+- `{{ISSUE_TRACKER_CONTENT}}`
+- `{{DOMAIN_DOCS_CONTENT}}`
 
 ## 维护方式
 
@@ -135,6 +177,7 @@ templates/agent-docs/
 - 修改内置 skills 或 registry 时，同步更新 `skills/registry.json` 和 `.claude/skill-authoring.md`。
 - 修改安装行为时，更新 `install.sh`。
 - 调整项目架构或技术规范时，同步更新 `.claude/` 中的长期文档。
+- 修改 CLI 行为后，更新或补充 `tests/` 中的集成测试。
 
 ## 安全策略
 

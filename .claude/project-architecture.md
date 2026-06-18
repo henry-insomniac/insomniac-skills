@@ -6,6 +6,7 @@
 
 - 把 `AGENTS.md` 与 `.claude` 长期上下文整理为可复用模板。
 - 为任意项目快速初始化架构、bug、Git 和技术规范文档。
+- 可选初始化 `docs/agents/`、`CONTEXT.md` / `CONTEXT-MAP.md` 和 `docs/adr/`，让 Agent 明确 issue tracker、triage label 和领域文档读取规则。
 - 默认保护目标项目已有文件，避免脚手架误覆盖项目上下文。
 - 为 Codex/Claude 类 Agent 提供清晰入口，降低协作成本。
 
@@ -24,6 +25,8 @@
 │   ├── bug-fix-log.md
 │   ├── git-collaboration.md
 │   └── tech-stack.md
+├── tests/
+│   └── test_init_agent_docs.py
 ├── scripts/
 │   └── init_agent_docs.py
 ├── skills/
@@ -33,10 +36,24 @@
 │   └── insomniac_skills_analytics.py
 └── templates/
     └── agent-docs/
+        ├── CONTEXT.md
+        ├── CONTEXT-MAP.md
         ├── AGENTS.md
+        ├── .scratch/
+        │   └── README.md
+        ├── docs/
+        │   ├── agents/
+        │   │   ├── README.md
+        │   │   ├── issue-tracker.md
+        │   │   ├── triage-labels.md
+        │   │   ├── domain.md
+        │   │   └── skill-usage.md
+        │   └── adr/
+        │       └── README.md
         └── .claude/
             ├── README.md
             ├── project-architecture.md
+            ├── skill-authoring.md
             ├── bug-fix-log.md
             ├── git-collaboration.md
             └── tech-stack.md
@@ -60,7 +77,13 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 
 初始化 CLI。负责读取模板、替换占位符，并写入目标项目。默认只初始化协作文档；当用户显式传入 `--with-skills` 时，才会把 registry 中的本地 skills 写入目标项目 `.agents/skills/`。
 
-当前支持的 skill 相关参数：
+当前支持的 Agent 操作规则层参数：
+
+- `--with-agent-ops`：生成 `docs/agents/*`、`docs/adr/README.md`，并根据领域布局生成 `CONTEXT.md` 或 `CONTEXT-MAP.md`。
+- `--issue-tracker manual|auto|github|gitlab|local`：生成 issue tracker 操作规则。`auto` 读取目标项目 `.git/config`，检测 GitHub 或 GitLab remote；`local` 额外生成 `.scratch/README.md`。
+- `--domain-layout single|multi|claude-only`：选择领域上下文布局。`single` 生成 `CONTEXT.md`，`multi` 生成 `CONTEXT-MAP.md`，`claude-only` 只依赖 `AGENTS.md` 和 `.claude/`，不生成 `CONTEXT*`。
+
+当前支持的 skill 安装参数：
 
 - `--list-skills`：列出可用 profile 和 skill。
 - `--with-skills PROFILE_OR_SKILL`：安装指定 profile 或单个 skill，可重复传入。
@@ -78,6 +101,12 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 ### `templates/agent-docs/`
 
 脚手架输出模板。模板应保持项目通用，避免写死本仓库或个人机器的细节。
+
+其中 `docs/agents/` 参考 `setup-matt-pocock-skills` 的配置分层，但按本项目约定改写为中文、默认安全、兼容 `.claude/` 的 Agent 操作规则层。
+
+### `tests/`
+
+CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的公共接口验证输出结构，不依赖脚本内部实现细节。
 
 ### `server/insomniac_skills_analytics.py`
 
@@ -103,15 +132,17 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 
 1. 用户指定目标项目目录、项目名和项目描述。
 2. `scripts/init_agent_docs.py` 读取 `templates/agent-docs/`。
-3. 脚本替换 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}` 和 `{{DATE}}`。
-4. 脚本写入 `AGENTS.md` 和 `.claude/*`。
-5. 若目标文件已存在，默认跳过；传入 `--force` 时才覆盖。
+3. 脚本替换项目基础占位符和 Agent 操作规则动态占位符。
+4. 如果启用 `--with-agent-ops`，脚本根据 `--issue-tracker` 和 `--domain-layout` 选择性写入 `docs/agents/*`、`docs/adr/README.md`、`CONTEXT.md`、`CONTEXT-MAP.md` 或 `.scratch/README.md`。
+5. 脚本写入 `AGENTS.md` 和 `.claude/*`。
+6. 若目标文件已存在，默认跳过；传入 `--force` 时才覆盖。
 
 ## 扩展原则
 
 - 模板先保持通用，再由目标项目补充真实技术细节。
 - 默认不覆盖已有文件，覆盖必须显式开启。
 - 脚手架只初始化长期上下文，不替目标项目推断不存在的架构。
+- Agent 操作规则层可以检测 GitHub/GitLab remote，但不会在默认 manual 模式假设 issue tracker。
 - 新增模板占位符时，必须同步更新脚本和 `README.md`。
 - 对外部工具、账号、网络、密钥有依赖的流程必须写明前置条件和失败处理。
 - 第三方开源 skills 不默认安装；必须先进入 registry，记录来源、版本、许可证、权限边界和审计状态，再通过显式 profile 或 skill 名称安装。
@@ -124,3 +155,4 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 | 2026-06-10 | 增加 Agent 文档脚手架 | 支持初始化任意项目的 `AGENTS.md` 和 `.claude` 文档 | 已创建模板目录与初始化脚本 |
 | 2026-06-10 | 增加 curl 安装和统计看板 | 使用域名安装入口，记录调用量和 IP 归属地 | 已部署 nginx 转发、systemd 服务和 dashboard |
 | 2026-06-10 | 增加可选 core skills 分发层 | 在不改变默认安全行为的前提下支持安装项目级 Agent 协作 skills | 已新增 `skills/registry.json`、`skills/core/` 和 CLI skill 参数 |
+| 2026-06-18 | 增加 Agent 操作规则层初始化 | 参考 `setup-matt-pocock-skills`，让目标项目明确 issue tracker、triage label 和领域文档读取规则 | 已新增 CLI 集成测试和 `--with-agent-ops` 参数 |

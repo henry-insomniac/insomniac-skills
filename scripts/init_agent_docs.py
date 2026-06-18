@@ -14,6 +14,8 @@ import sys
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TEMPLATE_DIR = REPO_ROOT / "templates" / "agent-docs"
 DEFAULT_SKILLS_DIR = REPO_ROOT / "skills"
+AGENT_OPS_TOP_LEVEL_FILES = {"CONTEXT-MAP.md", "CONTEXT.md"}
+AGENT_OPS_TOP_LEVEL_DIRS = {".scratch", "docs"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -52,6 +54,32 @@ def parse_args() -> argparse.Namespace:
         help=(
             "Install an optional skill profile or skill into .agents/skills. "
             "Can be repeated. Example: --with-skills core"
+        ),
+    )
+    parser.add_argument(
+        "--with-agent-ops",
+        action="store_true",
+        help=(
+            "Create Agent operating docs such as docs/agents/*, "
+            "docs/adr/README.md, and CONTEXT.md."
+        ),
+    )
+    parser.add_argument(
+        "--issue-tracker",
+        choices=["auto", "github", "gitlab", "local", "manual"],
+        default="manual",
+        help=(
+            "Issue tracker docs to generate with --with-agent-ops. "
+            "Use auto to inspect the target git remote."
+        ),
+    )
+    parser.add_argument(
+        "--domain-layout",
+        choices=["single", "multi", "claude-only"],
+        default="single",
+        help=(
+            "Domain documentation layout to generate with --with-agent-ops. "
+            "Use single for CONTEXT.md, multi for CONTEXT-MAP.md, or claude-only."
         ),
     )
     parser.add_argument(
@@ -165,6 +193,189 @@ def iter_template_files(template_dir: Path) -> list[Path]:
     return sorted(path for path in template_dir.rglob("*") if should_include(path))
 
 
+def is_agent_ops_template(relative_path: Path) -> bool:
+    return (
+        relative_path.name in AGENT_OPS_TOP_LEVEL_FILES
+        or relative_path.parts[0] in AGENT_OPS_TOP_LEVEL_DIRS
+    )
+
+
+def is_local_issue_tracker_template(relative_path: Path) -> bool:
+    return relative_path.parts[0] == ".scratch"
+
+
+def is_context_template(relative_path: Path) -> bool:
+    return relative_path == Path("CONTEXT.md")
+
+
+def is_context_map_template(relative_path: Path) -> bool:
+    return relative_path == Path("CONTEXT-MAP.md")
+
+
+def agent_skills_block() -> str:
+    return """## Agent skills
+
+### Issue tracker
+
+本项目的 issue、PRD 和任务流转规则见 `docs/agents/issue-tracker.md`。
+
+### Triage labels
+
+Agent 处理 issue 状态时，必须使用 `docs/agents/triage-labels.md` 中定义的 label 映射。
+
+### Domain docs
+
+理解项目领域语言、架构决策和长期上下文时，先阅读 `docs/agents/domain.md`。
+"""
+
+
+def detect_issue_tracker(target_dir: Path, requested: str) -> str:
+    if requested != "auto":
+        return requested
+
+    git_config = target_dir / ".git" / "config"
+    if not git_config.is_file():
+        return "manual"
+
+    config_text = git_config.read_text(encoding="utf-8", errors="replace").lower()
+    if "github.com" in config_text:
+        return "github"
+    if "gitlab" in config_text:
+        return "gitlab"
+    return "manual"
+
+
+def issue_tracker_content(issue_tracker: str, project_name: str) -> str:
+    if issue_tracker == "github":
+        return """# Issue Tracker
+
+本项目的 issue、PRD 和任务流转使用 GitHub Issues。Agent 应通过 `gh` CLI 操作 issue。
+
+## 常用操作
+
+- 创建 issue：`gh issue create --title "..." --body "..."`
+- 读取 issue：`gh issue view <number> --comments`
+- 列出 issue：`gh issue list --state open --json number,title,body,labels,comments`
+- 评论 issue：`gh issue comment <number> --body "..."`
+- 添加或移除 label：`gh issue edit <number> --add-label "..."` / `--remove-label "..."`
+- 关闭 issue：`gh issue close <number> --comment "..."`
+
+仓库由当前目录的 `git remote -v` 推断。执行写入操作前，确认 `gh auth status` 已登录到正确账号。
+
+## Agent 规则
+
+- 当任务要求发布 PRD 或拆分 issue 时，创建 GitHub issue。
+- 当任务引用 issue 编号时，使用 `gh issue view <number> --comments` 读取完整上下文。
+- 涉及私有仓库、账号权限或敏感信息时，先确认安全边界。
+"""
+
+    if issue_tracker == "gitlab":
+        return """# Issue Tracker
+
+本项目的 issue、PRD 和任务流转使用 GitLab Issues。Agent 应通过 `glab` CLI 操作 issue。
+
+## 常用操作
+
+- 创建 issue：`glab issue create --title "..." --description "..."`
+- 读取 issue：`glab issue view <number> --comments`
+- 列出 issue：`glab issue list -F json`
+- 评论 issue：`glab issue note <number> --message "..."`
+- 添加或移除 label：`glab issue update <number> --label "..."` / `--unlabel "..."`
+- 关闭 issue：`glab issue close <number>`
+
+仓库由当前目录的 `git remote -v` 推断。执行写入操作前，确认 `glab auth status` 已登录到正确账号。
+
+## Agent 规则
+
+- 当任务要求发布 PRD 或拆分 issue 时，创建 GitLab issue。
+- 当任务引用 issue 编号时，使用 `glab issue view <number> --comments` 读取完整上下文。
+- GitLab 将 PR 称为 merge request；涉及 MR 时使用 `glab mr ...` 命令。
+- 涉及私有仓库、账号权限或敏感信息时，先确认安全边界。
+"""
+
+    if issue_tracker == "local":
+        return f"""# Issue Tracker
+
+本项目的 issue、PRD 和任务流转使用 Local Markdown。相关文件保存在 `{project_name}` 仓库内的 `.scratch/`。
+
+## 文件约定
+
+- 一个需求或功能一个目录：`.scratch/<feature>/`
+- PRD 写入：`.scratch/<feature>/PRD.md`
+- 拆分后的 issue 写入：`.scratch/<feature>/issues/01-<topic>.md`
+- triage 状态写在 issue 文件顶部的 `Status:` 行，状态值参考 `docs/agents/triage-labels.md`
+- 评论和后续对话追加到文件末尾的 `## Comments` 区域
+
+## Agent 规则
+
+- 当任务要求发布 PRD 或拆分 issue 时，创建或更新 `.scratch/<feature>/` 下的 Markdown 文件。
+- 当任务引用本地 issue 时，读取用户提供的文件路径。
+- 不要把 `.scratch/` 当作临时垃圾目录；其中内容代表项目本地任务记录。
+"""
+
+    return f"""# Issue Tracker
+
+`{project_name}` 的 issue、PRD 和任务流转位置尚未配置。
+
+## 默认规则
+
+- Agent 不应假设项目一定使用 GitHub、GitLab、Linear、Jira 或本地 Markdown。
+- 创建、读取、关闭 issue 或写入 PRD 前，必须先确认项目真实使用的 issue tracker。
+- 若项目后续决定使用 GitHub Issues、GitLab Issues 或本地 `.scratch/` 文件，应把具体命令和路径记录到本文件。
+
+## 待维护内容
+
+- issue tracker 类型：
+- 创建 issue 的方式：
+- 读取 issue 的方式：
+- 评论或追加上下文的方式：
+- 关闭或标记完成的方式：
+"""
+
+
+def domain_docs_content(domain_layout: str, project_name: str) -> str:
+    if domain_layout == "claude-only":
+        return f"""# Domain Docs
+
+本项目使用 `claude-only` 长期上下文布局。Agent 在 `{project_name}` 中理解项目背景、架构和协作规则时，优先读取 `.claude/`。
+
+## 读取顺序
+
+1. 先阅读根目录 `AGENTS.md`。
+2. 再阅读 `.claude/README.md`，按索引进入相关长期文档。
+3. 如果存在 `docs/adr/`，阅读和当前改动相关的 ADR。
+
+缺失的文件不代表错误。Agent 应基于已有文档工作，不要为了补齐形式而编造不存在的架构。
+
+## 输出规则
+
+- 输出 issue、PRD、测试名、提交说明或架构建议时，使用 `.claude/` 已记录的项目词汇。
+- 如果需要的新概念不在上下文中，应在结果中说明这是待确认的领域词汇。
+- 如果改动与现有 ADR 冲突，必须显式指出冲突点和需要重新决策的原因。
+"""
+
+    return f"""# Domain Docs
+
+本项目使用 `{domain_layout}` 长期上下文布局。Agent 在 `{project_name}` 中理解项目背景、领域语言和架构决策时，应同时读取 `.claude/` 与领域上下文文件。
+
+## 读取顺序
+
+1. 先阅读根目录 `AGENTS.md`。
+2. 再阅读 `.claude/README.md`，按索引进入相关长期文档。
+3. 如果存在 `CONTEXT.md`，阅读其中的领域词汇和项目边界。
+4. 如果存在 `CONTEXT-MAP.md`，按任务相关范围读取对应的 `CONTEXT.md`。
+5. 如果存在 `docs/adr/`，阅读和当前改动相关的 ADR。
+
+缺失的文件不代表错误。Agent 应基于已有文档工作，不要为了补齐形式而编造不存在的架构。
+
+## 领域语言
+
+- 输出 issue、PRD、测试名、提交说明或架构建议时，优先使用 `CONTEXT.md` 已定义的项目词汇。
+- 如果需要的新概念不在上下文中，应在结果中说明这是待确认的领域词汇。
+- 如果改动与现有 ADR 冲突，必须显式指出冲突点和需要重新决策的原因。
+"""
+
+
 def iter_skill_files(skill_dir: Path) -> list[Path]:
     ignored_names = {".DS_Store"}
 
@@ -203,6 +414,8 @@ def main() -> int:
         print(f"Template directory is empty: {template_dir}", file=sys.stderr)
         return 2
 
+    issue_tracker = detect_issue_tracker(target_dir, args.issue_tracker)
+
     try:
         registry = load_skill_registry(skills_dir)
         requested_skills = resolve_requested_skills(registry, args.with_skills)
@@ -214,6 +427,9 @@ def main() -> int:
         "PROJECT_NAME": project_name,
         "PROJECT_DESCRIPTION": args.description,
         "DATE": args.date,
+        "AGENT_SKILLS_BLOCK": agent_skills_block() if args.with_agent_ops else "",
+        "ISSUE_TRACKER_CONTENT": issue_tracker_content(issue_tracker, project_name),
+        "DOMAIN_DOCS_CONTENT": domain_docs_content(args.domain_layout, project_name),
     }
 
     planned: list[tuple[Path, Path, str]] = []
@@ -222,6 +438,17 @@ def main() -> int:
 
     for source in files:
         relative_path = source.relative_to(template_dir)
+        if is_agent_ops_template(relative_path) and not args.with_agent_ops:
+            continue
+        if (
+            is_local_issue_tracker_template(relative_path)
+            and issue_tracker != "local"
+        ):
+            continue
+        if is_context_template(relative_path) and args.domain_layout != "single":
+            continue
+        if is_context_map_template(relative_path) and args.domain_layout != "multi":
+            continue
         destination = target_dir / relative_path
         if destination.exists() and not args.force:
             existing.append(destination)

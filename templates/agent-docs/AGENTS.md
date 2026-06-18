@@ -17,6 +17,8 @@
 - `.claude/git-collaboration.md`：分支、提交、PR 和代码评审规范。
 - `.claude/tech-stack.md`：项目相关技术栈、工具链和技术规范。
 
+{{AGENT_SKILLS_BLOCK}}
+
 ## Agent 工作原则
 
 - 先阅读本文件和 `.claude/README.md`，再修改项目结构或新增规范。

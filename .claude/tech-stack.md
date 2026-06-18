@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-仓库当前以 Markdown 模板、JSON registry 和 Python 标准库脚本为主，暂无外部运行时依赖、包管理器、测试框架或构建系统。
+仓库当前以 Markdown 模板、JSON registry、Python 标准库脚本和 Python `unittest` 集成测试为主，暂无外部运行时依赖、包管理器或构建系统。
 
 ## 文档规范
 
@@ -16,10 +16,11 @@
 
 - 脚手架模板位于 `templates/agent-docs/`。
 - 模板中的路径结构应和目标项目输出结构一致。
-- 模板支持 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}` 和 `{{DATE}}`。
+- 模板支持 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}`、`{{DATE}}`、`{{AGENT_SKILLS_BLOCK}}`、`{{ISSUE_TRACKER_CONTENT}}` 和 `{{DOMAIN_DOCS_CONTENT}}`。
 - 新增占位符必须同步更新 `scripts/init_agent_docs.py` 和 `README.md`。
 - 模板内容应保持通用，不写入单个项目、账号或个人机器的真实细节。
 - 初始化脚本会跳过 `.DS_Store`、`._*` 和 `__pycache__`，避免本地系统元数据污染输出。
+- `docs/agents/`、`CONTEXT.md`、`CONTEXT-MAP.md`、`docs/adr/README.md` 和 `.scratch/README.md` 属于可选 Agent 操作规则层，默认不写入；启用 `--with-agent-ops` 后按参数选择性生成。
 
 ## Skill registry 规范
 
@@ -79,7 +80,9 @@ git status --short
 脚手架行为变更至少执行：
 
 ```bash
+python3 -m unittest discover -s tests
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --force
+python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-agent-ops --issue-tracker auto --domain-layout single --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --dry-run
 python3 scripts/init_agent_docs.py --list-skills
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --with-skills core --force

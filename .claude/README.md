@@ -15,6 +15,7 @@
 - 修改项目结构时，同步更新 `project-architecture.md`。
 - 新增、删除或重命名 skill 时，同步更新 `skill-authoring.md` 中的相关约定或示例。
 - 调整可安装 skill profile 或 registry 字段时，同步更新 `skill-authoring.md` 和 `README.md`。
+- 调整初始化 CLI 参数、模板占位符或输出结构时，同步更新 `project-architecture.md`、`tech-stack.md` 和 `README.md`。
 - 修复 bug 后，同步更新 `bug-fix-log.md`。
 - 调整协作流程时，同步更新 `git-collaboration.md`。
 - 引入新语言、运行时、包管理器、测试框架或格式化工具时，同步更新 `tech-stack.md`。
@@ -25,6 +26,8 @@
 
 - `templates/agent-docs/` 保存输出模板。
 - `scripts/init_agent_docs.py` 负责把模板初始化到目标项目。
+- `tests/` 通过 CLI 集成测试验证初始化输出结构。
+- `--with-agent-ops` 可选生成 `docs/agents/`、`CONTEXT.md` / `CONTEXT-MAP.md`、`docs/adr/` 和本地 `.scratch/` 工作区说明。
 - `skills/core/` 保存本项目维护的可选 core skills。
 - `skills/registry.json` 保存可安装 skill 和 profile 元数据。
 - `README.md` 提供使用入口。

@@ -17,6 +17,16 @@
 - 修复 bug 后，同步更新 `bug-fix-log.md`。
 - 调整协作流程时，同步更新 `git-collaboration.md`。
 - 引入新语言、运行时、包管理器、测试框架或格式化工具时，同步更新 `tech-stack.md`。
+- 如果项目启用了 `docs/agents/`，调整 issue tracker、triage label 或领域上下文布局时，同步更新对应文件。
+
+## 相关 Agent 操作规则
+
+如果初始化时启用了 `--with-agent-ops`，以下文件用于约束 Agent 的具体操作方式：
+
+- `../docs/agents/issue-tracker.md`：issue、PRD 和任务流转位置。
+- `../docs/agents/triage-labels.md`：issue triage 状态和项目真实 label 的映射。
+- `../docs/agents/domain.md`：长期上下文、领域语言和架构决策的读取规则。
+- `../docs/agents/skill-usage.md`：项目级 Agent skills 的组合使用建议。
 
 ## 当前状态
 

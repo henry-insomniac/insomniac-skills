@@ -22,6 +22,8 @@
     └── tech-stack.md
 ```
 
+{{DESIGN_ARCHITECTURE_BLOCK}}
+
 如果初始化时启用了 `--with-agent-ops`，还会根据参数生成：
 
 ```text

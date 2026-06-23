@@ -16,6 +16,7 @@ DEFAULT_TEMPLATE_DIR = REPO_ROOT / "templates" / "agent-docs"
 DEFAULT_SKILLS_DIR = REPO_ROOT / "skills"
 AGENT_OPS_TOP_LEVEL_FILES = {"CONTEXT-MAP.md", "CONTEXT.md"}
 AGENT_OPS_TOP_LEVEL_DIRS = {".scratch", "docs"}
+DESIGN_TOP_LEVEL_FILES = {"DESIGN.md"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -63,6 +64,11 @@ def parse_args() -> argparse.Namespace:
             "Create Agent operating docs such as docs/agents/*, "
             "docs/adr/README.md, and CONTEXT.md."
         ),
+    )
+    parser.add_argument(
+        "--with-design",
+        action="store_true",
+        help="Create a root DESIGN.md visual system guide for UI work.",
     )
     parser.add_argument(
         "--issue-tracker",
@@ -200,6 +206,10 @@ def is_agent_ops_template(relative_path: Path) -> bool:
     )
 
 
+def is_design_template(relative_path: Path) -> bool:
+    return relative_path.name in DESIGN_TOP_LEVEL_FILES
+
+
 def is_local_issue_tracker_template(relative_path: Path) -> bool:
     return relative_path.parts[0] == ".scratch"
 
@@ -226,6 +236,42 @@ Agent 处理 issue 状态时，必须使用 `docs/agents/triage-labels.md` 中�
 ### Domain docs
 
 理解项目领域语言、架构决策和长期上下文时，先阅读 `docs/agents/domain.md`。
+"""
+
+
+def design_guidance_block() -> str:
+    return """## 设计系统
+
+涉及 UI、前端、视觉样式、组件状态、响应式布局或设计还原时，先阅读根目录 `DESIGN.md`。该文件是项目视觉系统入口，记录颜色、字体、间距、组件和设计禁用项。
+"""
+
+
+def design_architecture_block() -> str:
+    return """如果初始化时启用了 `--with-design`，还会生成：
+
+```text
+.
+└── DESIGN.md
+```
+
+### `DESIGN.md`
+
+`DESIGN.md` 是项目视觉系统入口，用于记录 UI 任务需要遵循的颜色、字体、间距、组件样式和设计禁用项。
+"""
+
+
+def design_tech_stack_block() -> str:
+    return """## 设计系统规范
+
+如果项目启用了 `DESIGN.md`，UI 相关任务应先读取根目录 `DESIGN.md`，并优先复用其中定义的颜色、字体、间距、圆角和组件规则。
+
+如项目允许临时使用 Node.js，可用 Google DESIGN.md CLI 做结构检查：
+
+```bash
+npx @google/design.md lint DESIGN.md
+```
+
+该命令需要网络和 npm registry 访问；离线环境下应至少人工检查 front matter、token 引用和 Markdown section 顺序。
 """
 
 
@@ -428,6 +474,11 @@ def main() -> int:
         "PROJECT_DESCRIPTION": args.description,
         "DATE": args.date,
         "AGENT_SKILLS_BLOCK": agent_skills_block() if args.with_agent_ops else "",
+        "DESIGN_GUIDANCE_BLOCK": design_guidance_block() if args.with_design else "",
+        "DESIGN_ARCHITECTURE_BLOCK": (
+            design_architecture_block() if args.with_design else ""
+        ),
+        "DESIGN_TECH_STACK_BLOCK": design_tech_stack_block() if args.with_design else "",
         "ISSUE_TRACKER_CONTENT": issue_tracker_content(issue_tracker, project_name),
         "DOMAIN_DOCS_CONTENT": domain_docs_content(args.domain_layout, project_name),
     }
@@ -439,6 +490,8 @@ def main() -> int:
     for source in files:
         relative_path = source.relative_to(template_dir)
         if is_agent_ops_template(relative_path) and not args.with_agent_ops:
+            continue
+        if is_design_template(relative_path) and not args.with_design:
             continue
         if (
             is_local_issue_tracker_template(relative_path)

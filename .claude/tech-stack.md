@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-仓库当前以 Markdown 模板、JSON registry、Python 标准库脚本和 Python `unittest` 集成测试为主，暂无外部运行时依赖、包管理器或构建系统。
+仓库当前以 Markdown 模板、JSON registry、Python 标准库脚本和 Python `unittest` 集成测试为主。npm 仅作为分发 wrapper，核心脚手架逻辑仍由 `scripts/init_agent_docs.py` 实现。
 
 ## 文档规范
 
@@ -16,10 +16,11 @@
 
 - 脚手架模板位于 `templates/agent-docs/`。
 - 模板中的路径结构应和目标项目输出结构一致。
-- 模板支持 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}`、`{{DATE}}`、`{{AGENT_SKILLS_BLOCK}}`、`{{ISSUE_TRACKER_CONTENT}}` 和 `{{DOMAIN_DOCS_CONTENT}}`。
+- 模板支持 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}`、`{{DATE}}`、`{{AGENT_SKILLS_BLOCK}}`、`{{DESIGN_GUIDANCE_BLOCK}}`、`{{DESIGN_ARCHITECTURE_BLOCK}}`、`{{DESIGN_TECH_STACK_BLOCK}}`、`{{ISSUE_TRACKER_CONTENT}}` 和 `{{DOMAIN_DOCS_CONTENT}}`。
 - 新增占位符必须同步更新 `scripts/init_agent_docs.py` 和 `README.md`。
 - 模板内容应保持通用，不写入单个项目、账号或个人机器的真实细节。
 - 初始化脚本会跳过 `.DS_Store`、`._*` 和 `__pycache__`，避免本地系统元数据污染输出。
+- `DESIGN.md` 属于可选设计系统入口，默认不写入；启用 `--with-design` 后生成，并在入口文档中加入 UI 任务读取提示。
 - `docs/agents/`、`CONTEXT.md`、`CONTEXT-MAP.md`、`docs/adr/README.md` 和 `.scratch/README.md` 属于可选 Agent 操作规则层，默认不写入；启用 `--with-agent-ops` 后按参数选择性生成。
 
 ## Skill registry 规范
@@ -35,6 +36,10 @@
 当前初始化脚本为 `scripts/init_agent_docs.py`，仅使用 Python 标准库。
 
 `install.sh` 是 curl 安装入口，使用 POSIX shell 编写，依赖 `python3`，下载阶段需要 `curl` 或 `wget`。
+
+`bin/init-agent-docs.js` 是 npm CLI wrapper，使用 Node.js 标准库调用 `scripts/init_agent_docs.py`。它不应复制模板渲染、skills 安装或 issue tracker 检测逻辑。
+
+`package.json` 负责 npm 包名、`bin` 映射、`files` 白名单和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。
 
 服务器发布入口使用 `https://yi-flow.com/insomniac-skills/install.sh`。安装统计服务位于 `server/insomniac_skills_analytics.py`，部署后由 nginx 将 `/insomniac-skills/` 转发到本机服务端口。
 
@@ -82,11 +87,21 @@ git status --short
 ```bash
 python3 -m unittest discover -s tests
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --force
+python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-design --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-agent-ops --issue-tracker auto --domain-layout single --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --dry-run
 python3 scripts/init_agent_docs.py --list-skills
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --with-skills core --force
+npm test
+npm run pack:check
+npm exec --package . -- init-agent-docs --help
 sh install.sh
+```
+
+如果当前环境允许临时访问 npm registry，可额外验证生成的设计系统结构：
+
+```bash
+npx @google/design.md lint /tmp/agent-docs-test/DESIGN.md
 ```
 
 后续引入脚本或代码后，应补充对应验证命令，例如：

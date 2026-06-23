@@ -2,9 +2,9 @@
 
 ## 项目概述
 
-`insomniac-skills` 是一个用于初始化项目级 Agent 协作文档的脚手架仓库。项目目标是把 `AGENTS.md`、`.claude` 长期上下文、架构说明、bug 修复记录、Git 协作规范和技术规范整理成可复用模板，让新项目可以快速建立一致的 Agent 协作基线。
+`insomniac-skills` 是一个用于初始化项目级 Agent 协作文档的脚手架仓库。项目目标是把 `AGENTS.md`、`DESIGN.md`、`.claude` 长期上下文、架构说明、bug 修复记录、Git 协作规范和技术规范整理成可复用模板，让新项目可以快速建立一致的 Agent 协作基线。
 
-当前仓库提供模板目录和初始化脚本。修改脚手架输出内容时，应优先修改 `templates/agent-docs/`；修改初始化行为时，更新 `scripts/init_agent_docs.py`。
+当前仓库提供模板目录、初始化脚本、curl 安装入口和 npm wrapper。修改脚手架输出内容时，应优先修改 `templates/agent-docs/`；修改初始化行为时，更新 `scripts/init_agent_docs.py`；修改 npm 分发入口时，更新 `bin/init-agent-docs.js` 和 `package.json`。
 
 ## 详情索引
 
@@ -46,6 +46,8 @@ python3 scripts/init_agent_docs.py \
 
 - 先阅读本文件和 `.claude/README.md`，再修改项目结构或新增规范。
 - 新增或调整 skill 时，同步更新对应的架构说明、技术规范和必要示例。
+- 新增或调整 `DESIGN.md` 输出时，同步更新模板、初始化脚本、README、架构说明和测试。
+- 新增或调整 npm 包发布入口时，同步运行 wrapper 测试、`npm pack --dry-run --json` 和 npm exec 验证。
 - 保持改动聚焦，避免把无关重构、格式化或命名调整混入同一个变更。
 - 记录重要决策的原因，尤其是目录结构、skill 接口、依赖工具和协作流程的变化。
 - 修复问题后更新 `.claude/bug-fix-log.md`，包含现象、原因、修复方式和验证结果。
@@ -57,6 +59,7 @@ python3 scripts/init_agent_docs.py \
 ```text
 .
 ├── AGENTS.md
+├── DESIGN.md
 ├── .claude/
 │   ├── README.md
 │   ├── project-architecture.md
@@ -65,11 +68,15 @@ python3 scripts/init_agent_docs.py \
 │   ├── git-collaboration.md
 │   └── tech-stack.md
 ├── README.md
+├── package.json
+├── bin/
+│   └── init-agent-docs.js
 ├── scripts/
 │   └── init_agent_docs.py
 └── templates/
     └── agent-docs/
         ├── AGENTS.md
+        ├── DESIGN.md
         └── .claude/
 ```
 

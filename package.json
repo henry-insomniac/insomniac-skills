@@ -1,0 +1,32 @@
+{
+  "name": "insomniac-skills",
+  "version": "0.1.1",
+  "description": "Initialize reusable Agent collaboration docs for projects.",
+  "bin": {
+    "init-agent-docs": "bin/init-agent-docs.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/init_agent_docs.py",
+    "templates/",
+    "skills/",
+    "README.md",
+    "AGENTS.md"
+  ],
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests",
+    "pack:check": "npm pack --dry-run --json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/henry-insomniac/insomniac-skills.git"
+  },
+  "homepage": "https://github.com/henry-insomniac/insomniac-skills#readme",
+  "bugs": {
+    "url": "https://github.com/henry-insomniac/insomniac-skills/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

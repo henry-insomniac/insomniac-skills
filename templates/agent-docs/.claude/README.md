@@ -19,6 +19,8 @@
 - 引入新语言、运行时、包管理器、测试框架或格式化工具时，同步更新 `tech-stack.md`。
 - 如果项目启用了 `docs/agents/`，调整 issue tracker、triage label 或领域上下文布局时，同步更新对应文件。
 
+{{DESIGN_GUIDANCE_BLOCK}}
+
 ## 相关 Agent 操作规则
 
 如果初始化时启用了 `--with-agent-ops`，以下文件用于约束 Agent 的具体操作方式：

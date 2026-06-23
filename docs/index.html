@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>insomniac-skills - Agent collaboration docs scaffold</title>
+    <meta
+      name="description"
+      content="Initialize AGENTS.md, DESIGN.md, .claude context, Agent operating docs, and local Agent skills with one npm command."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="insomniac-skills home">
+        <span class="brand-mark">is</span>
+        <span>insomniac-skills</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#install">Install</a>
+        <a href="#options">Options</a>
+        <a href="#agent-layer">Agent Layer</a>
+        <a href="#skills">Skills</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Open-source Agent collaboration scaffold</p>
+          <h1>Project context, design rules, and Agent workflows in one command.</h1>
+          <p class="lead">
+            Initialize <code>AGENTS.md</code>, <code>DESIGN.md</code>,
+            <code>.claude/</code>, Agent operating docs, and optional local skills
+            without inventing project facts.
+          </p>
+          <p class="lead zh">
+            一个 npm 命令，为开源项目生成 Agent 协作文档、设计系统入口、长期上下文和可复用 skills。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#install">Use the CLI</a>
+            <a class="button secondary" href="https://www.npmjs.com/package/insomniac-skills">npm package</a>
+          </div>
+        </div>
+        <div class="command-panel" aria-label="Command example">
+          <div class="panel-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>npx -p insomniac-skills init-agent-docs \
+  --project-name my-project \
+  --description "Reusable Agent baseline" \
+  --with-design \
+  --with-agent-ops \
+  --issue-tracker auto</code></pre>
+        </div>
+      </section>
+
+      <section class="band feature-band" id="features">
+        <div class="section-heading">
+          <p class="eyebrow">What it creates</p>
+          <h2>A practical baseline for agent-ready repositories.</h2>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <h3>Collaboration entrypoint</h3>
+            <p><code>AGENTS.md</code> gives every agent the same project goal, working principles, and documentation map.</p>
+          </article>
+          <article>
+            <h3>Long-term context</h3>
+            <p><code>.claude/</code> stores architecture, tech stack, Git rules, skill authoring guidance, and bug-fix history.</p>
+          </article>
+          <article>
+            <h3>Design contract</h3>
+            <p><code>DESIGN.md</code> can be generated for UI work, with tokens, component guidance, and design boundaries.</p>
+          </article>
+          <article>
+            <h3>Agent operations</h3>
+            <p><code>docs/agents/</code> records issue tracker, triage labels, domain-doc reading order, and skill usage rules.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="split-section" id="install">
+        <div>
+          <p class="eyebrow">npm first</p>
+          <h2>Install with npm, run with npx.</h2>
+          <p>
+            The published package exposes the system command
+            <code>init-agent-docs</code>. The wrapper calls the same Python
+            standard-library implementation used by the repo.
+          </p>
+          <p class="zh">npm 包提供系统命令，内部仍调用 Python 脚本，因此机器需要安装 <code>python3</code>。</p>
+        </div>
+        <div class="code-stack">
+          <pre><code>npx -p insomniac-skills init-agent-docs --help</code></pre>
+          <pre><code>npm install -g insomniac-skills
+init-agent-docs --project-name my-project</code></pre>
+          <pre><code>npm install -D insomniac-skills
+npx init-agent-docs --with-design</code></pre>
+        </div>
+      </section>
+
+      <section class="band" id="options">
+        <div class="section-heading">
+          <p class="eyebrow">Command reference</p>
+          <h2>Every CLI option, explicit and predictable.</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Default</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--target TARGET</code></td><td><code>.</code></td><td>Target project directory.</td></tr>
+              <tr><td><code>--project-name PROJECT_NAME</code></td><td>target directory name</td><td>Project name written into generated docs.</td></tr>
+              <tr><td><code>--description DESCRIPTION</code></td><td>generic Agent context description</td><td>Project description written into generated docs.</td></tr>
+              <tr><td><code>--template-dir TEMPLATE_DIR</code></td><td>bundled templates</td><td>Use a custom template directory.</td></tr>
+              <tr><td><code>--skills-dir SKILLS_DIR</code></td><td>bundled skills</td><td>Use a custom skills registry and source directory.</td></tr>
+              <tr><td><code>--with-skills PROFILE_OR_SKILL</code></td><td>off</td><td>Install an optional skill profile or skill into <code>.agents/skills/</code>.</td></tr>
+              <tr><td><code>--with-agent-ops</code></td><td>off</td><td>Generate issue, triage, domain, skill usage, ADR, and context docs.</td></tr>
+              <tr><td><code>--with-design</code></td><td>off</td><td>Generate root <code>DESIGN.md</code> and UI-task guidance.</td></tr>
+              <tr><td><code>--issue-tracker</code></td><td><code>manual</code></td><td>Choose <code>auto</code>, <code>github</code>, <code>gitlab</code>, <code>local</code>, or <code>manual</code>.</td></tr>
+              <tr><td><code>--domain-layout</code></td><td><code>single</code></td><td>Choose <code>single</code>, <code>multi</code>, or <code>claude-only</code>.</td></tr>
+              <tr><td><code>--list-skills</code></td><td>off</td><td>List available skill profiles and skills, then exit.</td></tr>
+              <tr><td><code>--date DATE</code></td><td>today</td><td>Initialization date, preferably <code>YYYY-MM-DD</code>.</td></tr>
+              <tr><td><code>--force</code></td><td>off</td><td>Overwrite existing target files.</td></tr>
+              <tr><td><code>--dry-run</code></td><td>off</td><td>Show files that would be written without changing the target.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="diagram-section" id="agent-layer">
+        <div class="section-heading">
+          <p class="eyebrow">Agent layer</p>
+          <h2>Separate facts, workflows, design, and reusable skills.</h2>
+          <p>
+            The scaffold keeps project truth in long-lived documents and keeps
+            optional agent operations explicit. Existing files are protected by default.
+          </p>
+        </div>
+        <img src="assets/agent-layer.svg" alt="Layered architecture diagram for insomniac-skills generated project documents" />
+      </section>
+
+      <section class="band skills-section" id="skills">
+        <div class="section-heading">
+          <p class="eyebrow">Core skill catalog</p>
+          <h2>Reusable local workflows, installed only when requested.</h2>
+          <p class="zh">默认不安装任何 skill；使用 <code>--with-skills core</code> 才会写入目标项目。</p>
+        </div>
+        <div class="skills-grid">
+          <article><h3>agent-docs-bootstrap</h3><p>Initialize or repair project-level Agent docs without inventing nonexistent architecture.</p></article>
+          <article><h3>template-maintainer</h3><p>Maintain scaffold templates and keep README, architecture docs, and CLI behavior aligned.</p></article>
+          <article><h3>skill-author</h3><p>Create, update, or review Agent Skills with clear triggers, workflow, validation, and safety boundaries.</p></article>
+          <article><h3>bug-fix-recorder</h3><p>Record bug symptoms, impact, root cause, fix, validation, and follow-up in <code>.claude/bug-fix-log.md</code>.</p></article>
+          <article><h3>repo-onboarding</h3><p>Produce a fact-based repository orientation from real files, entry points, tests, and known risks.</p></article>
+          <article><h3>security-boundary-review</h3><p>Review scripts, installers, skills, publishing, credentials, network calls, and unsafe writes.</p></article>
+          <article><h3>release-packaging</h3><p>Prepare installer layout, release artifacts, package contents, and post-install validation.</p></article>
+          <article><h3>agent-handoff</h3><p>Summarize completed or paused Agent work so another maintainer can continue cleanly.</p></article>
+        </div>
+      </section>
+
+      <section class="closing">
+        <div>
+          <p class="eyebrow">Open source ready</p>
+          <h2>Start with npm. Keep the project truth in the repo.</h2>
+        </div>
+        <a class="button primary" href="https://github.com/henry-insomniac/insomniac-skills">View on GitHub</a>
+      </section>
+    </main>
+  </body>
+</html>

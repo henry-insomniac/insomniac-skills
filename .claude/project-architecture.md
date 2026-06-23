@@ -9,6 +9,7 @@
 - 可选初始化根目录 `DESIGN.md`，让 UI 任务拥有独立的视觉系统入口。
 - 可选初始化 `docs/agents/`、`CONTEXT.md` / `CONTEXT-MAP.md` 和 `docs/adr/`，让 Agent 明确 issue tracker、triage label 和领域文档读取规则。
 - 通过 npm wrapper 暴露同一份 Python CLI，让用户可用 `npx` 或 `npm install -g` 调用脚手架。
+- 通过 GitHub Pages 提供开源项目主页，集中说明功能、命令参数、npm 用法、Agent 层和 skill 列表。
 - 默认保护目标项目已有文件，避免脚手架误覆盖项目上下文。
 - 为 Codex/Claude 类 Agent 提供清晰入口，降低协作成本。
 
@@ -22,8 +23,15 @@
 ├── DESIGN.md
 ├── README.md
 ├── package.json
+├── .github/
+│   └── workflows/
+│       └── pages.yml
 ├── bin/
 │   └── init-agent-docs.js
+├── docs/
+│   ├── index.html
+│   ├── styles.css
+│   └── assets/
 ├── .claude/
 │   ├── README.md
 │   ├── project-architecture.md
@@ -91,6 +99,14 @@ npm 分发入口。记录包名、版本、`bin` 命令映射、打包白名单�
 ### `bin/init-agent-docs.js`
 
 npm CLI wrapper。它不重新实现脚手架逻辑，只负责查找并调用 `scripts/init_agent_docs.py`，把参数原样传给 Python CLI。这样 npm、curl 和仓库内运行共享同一份核心实现。
+
+### `docs/`
+
+GitHub Pages 静态站点。用于对外介绍项目能力、npm 命令、完整参数、Agent 文档层、`DESIGN.md` 入口和 core skills 列表。该目录是开源项目主页，不参与 npm 包内容白名单。
+
+### `.github/workflows/pages.yml`
+
+GitHub Pages 部署 workflow。它在 `main` 分支上 `docs/**` 或 workflow 本身变更时，把 `docs/` 上传为 Pages artifact 并部署。
 
 ### `scripts/init_agent_docs.py`
 
@@ -168,11 +184,19 @@ CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的�
 
 当前 npm 包名规划为 `insomniac-skills`，CLI 命令名为 `init-agent-docs`。如果 npm registry 上包名被占用，应优先改包名而不是改命令名。
 
+## GitHub Pages 发布流程
+
+1. 修改 `docs/index.html`、`docs/styles.css` 或 `docs/assets/*`。
+2. 本地检查静态页面链接、布局和命令文本。
+3. 推送 `main` 后由 `.github/workflows/pages.yml` 自动部署。
+4. 项目主页预期地址为 `https://henry-insomniac.github.io/insomniac-skills/`，实际地址以 GitHub Pages workflow 输出为准。
+
 ## 扩展原则
 
 - 模板先保持通用，再由目标项目补充真实技术细节。
 - `DESIGN.md` 模板只提供原创通用视觉基线，不内置第三方品牌、私有设计资产或真实业务细节。
 - npm wrapper 必须保持薄层，不复制 Python CLI 逻辑，避免 npm 和 curl 入口行为漂移。
+- GitHub Pages 站点只展示公开项目能力，不写入私有部署路径、账号、dashboard 凭据或服务器细节。
 - 默认不覆盖已有文件，覆盖必须显式开启。
 - 脚手架只初始化长期上下文，不替目标项目推断不存在的架构。
 - Agent 操作规则层可以检测 GitHub/GitLab remote，但不会在默认 manual 模式假设 issue tracker。
@@ -191,3 +215,4 @@ CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的�
 | 2026-06-18 | 增加 Agent 操作规则层初始化 | 参考 `setup-matt-pocock-skills`，让目标项目明确 issue tracker、triage label 和领域文档读取规则 | 已新增 CLI 集成测试和 `--with-agent-ops` 参数 |
 | 2026-06-23 | 增加可选 `DESIGN.md` 输出 | 为 UI 任务提供独立视觉系统入口，同时保持默认脚手架通用 | 已新增 `--with-design`、模板和 CLI 集成测试 |
 | 2026-06-23 | 增加 npm wrapper 和 package 元数据 | 支持通过 npm/npx 使用同一份 Python CLI | 已新增 package metadata、Node wrapper、npm pack 和 npm exec 测试 |
+| 2026-06-23 | 增加 GitHub Pages 开源项目主页 | 对外展示功能、命令参数、Agent 层和 skill 列表 | 已新增 `docs/` 静态站点和 Pages workflow |

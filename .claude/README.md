@@ -18,6 +18,7 @@
 - 调整初始化 CLI 参数、模板占位符或输出结构时，同步更新 `project-architecture.md`、`tech-stack.md` 和 `README.md`。
 - 调整 `DESIGN.md` 模板、`--with-design` 参数或设计系统输出规则时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md` 和测试。
 - 调整 npm wrapper、`package.json`、包内容白名单或发布脚本时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md` 和 npm wrapper 测试。
+- 调整 GitHub Pages 开源项目主页时，同步更新 `project-architecture.md`、`tech-stack.md` 和站点验证记录。
 - 修复 bug 后，同步更新 `bug-fix-log.md`。
 - 调整协作流程时，同步更新 `git-collaboration.md`。
 - 引入新语言、运行时、包管理器、测试框架或格式化工具时，同步更新 `tech-stack.md`。
@@ -30,6 +31,8 @@
 - `scripts/init_agent_docs.py` 负责把模板初始化到目标项目。
 - `bin/init-agent-docs.js` 提供 npm package 的 CLI wrapper，调用同一份 Python 初始化脚本。
 - `package.json` 保存 npm 包名、bin 映射、打包白名单和维护脚本。
+- `docs/` 保存 GitHub Pages 静态项目主页。
+- `.github/workflows/pages.yml` 负责把 `docs/` 部署到 GitHub Pages。
 - `tests/` 通过 CLI 集成测试验证初始化输出结构。
 - `--with-design` 可选生成根目录 `DESIGN.md`，并在 Agent 入口和长期上下文索引中加入 UI 任务读取提示。
 - `--with-agent-ops` 可选生成 `docs/agents/`、`CONTEXT.md` / `CONTEXT-MAP.md`、`docs/adr/` 和本地 `.scratch/` 工作区说明。

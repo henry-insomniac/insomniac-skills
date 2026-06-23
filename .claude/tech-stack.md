@@ -41,6 +41,8 @@
 
 `package.json` 负责 npm 包名、`bin` 映射、`files` 白名单和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。
 
+`docs/` 是 GitHub Pages 静态站点，使用原生 HTML/CSS，不需要前端构建工具。`.github/workflows/pages.yml` 使用 GitHub 官方 Pages Actions 部署该目录。
+
 服务器发布入口使用 `https://yi-flow.com/insomniac-skills/install.sh`。安装统计服务位于 `server/insomniac_skills_analytics.py`，部署后由 nginx 将 `/insomniac-skills/` 转发到本机服务端口。
 
 公网安全相关配置：
@@ -95,6 +97,7 @@ python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name 
 npm test
 npm run pack:check
 npm exec --package . -- init-agent-docs --help
+python3 -m http.server 4173 --directory docs
 sh install.sh
 ```
 

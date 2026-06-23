@@ -48,6 +48,7 @@ python3 scripts/init_agent_docs.py \
 - 新增或调整 skill 时，同步更新对应的架构说明、技术规范和必要示例。
 - 新增或调整 `DESIGN.md` 输出时，同步更新模板、初始化脚本、README、架构说明和测试。
 - 新增或调整 npm 包发布入口时，同步运行 wrapper 测试、`npm pack --dry-run --json` 和 npm exec 验证。
+- 新增或调整 GitHub Pages 站点时，同步更新 `docs/`、`.github/workflows/pages.yml`、架构说明和技术规范。
 - 保持改动聚焦，避免把无关重构、格式化或命名调整混入同一个变更。
 - 记录重要决策的原因，尤其是目录结构、skill 接口、依赖工具和协作流程的变化。
 - 修复问题后更新 `.claude/bug-fix-log.md`，包含现象、原因、修复方式和验证结果。
@@ -69,8 +70,15 @@ python3 scripts/init_agent_docs.py \
 │   └── tech-stack.md
 ├── README.md
 ├── package.json
+├── .github/
+│   └── workflows/
+│       └── pages.yml
 ├── bin/
 │   └── init-agent-docs.js
+├── docs/
+│   ├── index.html
+│   ├── styles.css
+│   └── assets/
 ├── scripts/
 │   └── init_agent_docs.py
 └── templates/

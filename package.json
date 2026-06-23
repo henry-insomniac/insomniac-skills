@@ -1,6 +1,6 @@
 {
   "name": "insomniac-skills",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Initialize reusable Agent collaboration docs for projects.",
   "bin": {
     "init-agent-docs": "bin/init-agent-docs.js"

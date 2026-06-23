@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>insomniac-skills - Set up repo docs for coding agents</title>
+    <title>insomniac-skills - Agent docs CLI</title>
     <meta
       name="description"
-      content="Run one npm command to add AGENTS.md, DESIGN.md, .claude notes, agent operating docs, and optional local skills to a repository."
+      content="Create AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills with one npm command."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -18,9 +18,9 @@
           <span>insomniac-skills</span>
         </a>
         <nav class="nav-links" aria-label="Primary navigation">
-          <a href="#npm" data-i18n="navNpm">npm</a>
+          <a href="#npm" data-i18n="navNpm">Install</a>
           <a href="#options" data-i18n="navOptions">Options</a>
-          <a href="#agent-layer" data-i18n="navAgent">Agent Layer</a>
+          <a href="#agent-layer" data-i18n="navAgent">Structure</a>
           <a href="#skills" data-i18n="navSkills">Skills</a>
         </nav>
         <div class="language-switch" role="group" aria-label="Language">
@@ -33,38 +33,38 @@
     <main id="top">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow" data-i18n="heroEyebrow">CLI for Agent project docs</p>
-          <h1 data-i18n="heroTitle">Set up the docs agents need before they code.</h1>
+          <p class="eyebrow" data-i18n="heroEyebrow">Agent docs CLI</p>
+          <h1 data-i18n="heroTitle">Create agent docs in one command.</h1>
           <p class="lead" data-i18n="heroLead">
-            Run one command to add AGENTS.md, DESIGN.md, .claude notes, agent operating docs, and optional skills to any repo.
+            Add AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#npm" data-i18n="heroPrimary">See install command</a>
-            <a class="button button-secondary" href="https://www.npmjs.com/package/insomniac-skills" data-i18n="heroSecondary">Open npm package</a>
+            <a class="button button-primary" href="#npm" data-i18n="heroPrimary">Install</a>
+            <a class="button button-secondary" href="https://www.npmjs.com/package/insomniac-skills" data-i18n="heroSecondary">npm</a>
           </div>
         </div>
 
         <div class="hero-stage" aria-label="Generated project document preview">
           <div class="stage-topline">
-            <span data-i18n="stageTitle">Files added to your repo</span>
-            <span data-i18n="stageState">no overwrite by default</span>
+            <span data-i18n="stageTitle">Writes</span>
+            <span data-i18n="stageState">no overwrite</span>
           </div>
           <div class="stage-grid">
             <article class="stage-tile stage-tile-dark">
               <span>AGENTS.md</span>
-              <strong data-i18n="stageAgents">Where agents start</strong>
+              <strong data-i18n="stageAgents">Start here</strong>
             </article>
             <article class="stage-tile">
               <span>DESIGN.md</span>
-              <strong data-i18n="stageDesign">How UI should look</strong>
+              <strong data-i18n="stageDesign">UI rules</strong>
             </article>
             <article class="stage-tile">
               <span>.claude/</span>
-              <strong data-i18n="stageClaude">Project notes that last</strong>
+              <strong data-i18n="stageClaude">Project context</strong>
             </article>
             <article class="stage-tile stage-tile-blue">
               <span>skills/core</span>
-              <strong data-i18n="stageSkills">Optional task workflows</strong>
+              <strong data-i18n="stageSkills">Workflows</strong>
             </article>
           </div>
         </div>
@@ -73,9 +73,9 @@
       <section class="product-band light-band" id="npm">
         <div class="section-copy">
           <p class="eyebrow" data-i18n="npmEyebrow">Install</p>
-          <h2 data-i18n="npmTitle">Run it once with npx, or install it as a command.</h2>
+          <h2 data-i18n="npmTitle">Run with npx.</h2>
           <p data-i18n="npmBody">
-            Use npx for one-time setup, or install globally to get init-agent-docs in your terminal. The npm wrapper runs the Python initializer, so the machine needs python3.
+            One-time setup uses npx. Global install adds init-agent-docs. Requires python3.
           </p>
         </div>
         <div class="command-showcase">
@@ -90,39 +90,39 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
 
       <section class="gallery-section" id="features">
         <div class="section-copy centered">
-          <p class="eyebrow" data-i18n="featuresEyebrow">Why these files</p>
-          <h2 data-i18n="featuresTitle">Agents work better when repo instructions are clear and close to the code.</h2>
+          <p class="eyebrow" data-i18n="featuresEyebrow">Files</p>
+          <h2 data-i18n="featuresTitle">Clear repo rules. Fewer wrong edits.</h2>
         </div>
         <div class="feature-gallery">
           <article class="feature-tile feature-tile-large">
             <p class="tile-kicker">AGENTS.md</p>
-            <h3 data-i18n="featureAgentsTitle">Tell agents how to work in this repo.</h3>
-            <p data-i18n="featureAgentsBody">Put the project goal, must-read docs, validation rules, and collaboration norms in one first-read file.</p>
+            <h3 data-i18n="featureAgentsTitle">Agent entrypoint.</h3>
+            <p data-i18n="featureAgentsBody">Goal, docs, rules, checks.</p>
           </article>
           <article class="feature-tile dark">
             <p class="tile-kicker">DESIGN.md</p>
-            <h3 data-i18n="featureDesignTitle">Give UI work a shared visual standard.</h3>
-            <p data-i18n="featureDesignBody">Document colors, type, spacing, components, and design boundaries before agents change screens.</p>
+            <h3 data-i18n="featureDesignTitle">UI rules.</h3>
+            <p data-i18n="featureDesignBody">Colors, type, spacing, components.</p>
           </article>
           <article class="feature-tile">
             <p class="tile-kicker">.claude/</p>
-            <h3 data-i18n="featureClaudeTitle">Keep lasting context out of chat.</h3>
-            <p data-i18n="featureClaudeBody">Store architecture, tech stack, Git rules, skill authoring notes, and bug-fix history where future agents can read them.</p>
+            <h3 data-i18n="featureClaudeTitle">Long-term notes.</h3>
+            <p data-i18n="featureClaudeBody">Architecture, stack, Git, fixes.</p>
           </article>
           <article class="feature-tile parchment">
             <p class="tile-kicker">docs/agents</p>
-            <h3 data-i18n="featureOpsTitle">Make agent process visible.</h3>
-            <p data-i18n="featureOpsBody">Add issue tracker notes, triage labels, domain reading order, ADRs, and skill usage rules when the project needs them.</p>
+            <h3 data-i18n="featureOpsTitle">Operating docs.</h3>
+            <p data-i18n="featureOpsBody">Issues, triage, domain notes, ADRs.</p>
           </article>
         </div>
       </section>
 
       <section class="product-band option-band" id="options">
         <div class="section-copy">
-          <p class="eyebrow" data-i18n="optionsEyebrow">Command flags</p>
-          <h2 data-i18n="optionsTitle">Copy a command, then adjust the flags for your repo.</h2>
+          <p class="eyebrow" data-i18n="optionsEyebrow">Flags</p>
+          <h2 data-i18n="optionsTitle">Common options.</h2>
           <p data-i18n="optionsBody">
-            Existing files are protected by default. Use dry-run to preview changes, and use force only when you want to overwrite files.
+            dry-run previews. force overwrites.
           </p>
         </div>
         <div class="option-table-wrap">
@@ -135,20 +135,20 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>--target TARGET</code></td><td><code>.</code></td><td data-i18n="optTarget">Choose the repo or folder to update.</td></tr>
-              <tr><td><code>--project-name PROJECT_NAME</code></td><td data-i18n="defaultProjectName">target folder name</td><td data-i18n="optProjectName">Set the project name shown in generated docs.</td></tr>
-              <tr><td><code>--description DESCRIPTION</code></td><td data-i18n="defaultDescription">generic project description</td><td data-i18n="optDescription">Add a short project description to the docs.</td></tr>
-              <tr><td><code>--template-dir TEMPLATE_DIR</code></td><td data-i18n="defaultTemplates">bundled templates</td><td data-i18n="optTemplateDir">Generate docs from your own template folder.</td></tr>
-              <tr><td><code>--skills-dir SKILLS_DIR</code></td><td data-i18n="defaultSkills">bundled skills</td><td data-i18n="optSkillsDir">Load skill profiles from your own skills folder.</td></tr>
-              <tr><td><code>--with-skills PROFILE_OR_SKILL</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optWithSkills">Copy a skill profile or a named skill into .agents/skills/.</td></tr>
-              <tr><td><code>--with-agent-ops</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optAgentOps">Add docs for issue tracking, triage labels, domain notes, ADRs, and skill usage.</td></tr>
-              <tr><td><code>--with-design</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDesign">Add DESIGN.md so UI changes have a shared design reference.</td></tr>
-              <tr><td><code>--issue-tracker</code></td><td><code>manual</code></td><td data-i18n="optIssueTracker">Set the issue tracker style: auto, github, gitlab, local, or manual.</td></tr>
-              <tr><td><code>--domain-layout</code></td><td><code>single</code></td><td data-i18n="optDomainLayout">Choose how domain notes are organized: single, multi, or claude-only.</td></tr>
-              <tr><td><code>--list-skills</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optListSkills">List available skill profiles and skills, then exit.</td></tr>
-              <tr><td><code>--date DATE</code></td><td data-i18n="defaultToday">today</td><td data-i18n="optDate">Set the date written into generated docs. Use YYYY-MM-DD when possible.</td></tr>
-              <tr><td><code>--force</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optForce">Overwrite files that already exist in the target repo.</td></tr>
-              <tr><td><code>--dry-run</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDryRun">Preview the files that would be written without changing anything.</td></tr>
+              <tr><td><code>--target TARGET</code></td><td><code>.</code></td><td data-i18n="optTarget">Repo to update.</td></tr>
+              <tr><td><code>--project-name PROJECT_NAME</code></td><td data-i18n="defaultProjectName">folder name</td><td data-i18n="optProjectName">Name in docs.</td></tr>
+              <tr><td><code>--description DESCRIPTION</code></td><td data-i18n="defaultDescription">generic summary</td><td data-i18n="optDescription">Project summary.</td></tr>
+              <tr><td><code>--template-dir TEMPLATE_DIR</code></td><td data-i18n="defaultTemplates">bundled templates</td><td data-i18n="optTemplateDir">Custom templates.</td></tr>
+              <tr><td><code>--skills-dir SKILLS_DIR</code></td><td data-i18n="defaultSkills">bundled skills</td><td data-i18n="optSkillsDir">Custom skills source.</td></tr>
+              <tr><td><code>--with-skills PROFILE_OR_SKILL</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optWithSkills">Copy skills.</td></tr>
+              <tr><td><code>--with-agent-ops</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optAgentOps">Add ops docs.</td></tr>
+              <tr><td><code>--with-design</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDesign">Add DESIGN.md.</td></tr>
+              <tr><td><code>--issue-tracker</code></td><td><code>manual</code></td><td data-i18n="optIssueTracker">Issue tracker style.</td></tr>
+              <tr><td><code>--domain-layout</code></td><td><code>single</code></td><td data-i18n="optDomainLayout">Domain docs layout.</td></tr>
+              <tr><td><code>--list-skills</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optListSkills">Show skills.</td></tr>
+              <tr><td><code>--date DATE</code></td><td data-i18n="defaultToday">today</td><td data-i18n="optDate">Date in docs.</td></tr>
+              <tr><td><code>--force</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optForce">Overwrite files.</td></tr>
+              <tr><td><code>--dry-run</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDryRun">Preview only.</td></tr>
             </tbody>
           </table>
         </div>
@@ -156,10 +156,10 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
 
       <section class="agent-section" id="agent-layer">
         <div class="section-copy centered">
-          <p class="eyebrow" data-i18n="agentEyebrow">Repo structure</p>
-          <h2 data-i18n="agentTitle">Each file has one job, so agents know where to look.</h2>
+          <p class="eyebrow" data-i18n="agentEyebrow">Structure</p>
+          <h2 data-i18n="agentTitle">One file, one job.</h2>
           <p data-i18n="agentBody">
-            AGENTS.md tells agents how to start. DESIGN.md tells them how UI should look. .claude stores durable project notes. docs/agents describes operating process. skills/core stays optional.
+            AGENTS.md: start. DESIGN.md: UI. .claude: context. docs/agents: process. skills/core: optional.
           </p>
         </div>
         <figure class="architecture-figure">
@@ -169,30 +169,30 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
 
       <section class="skills-section" id="skills">
         <div class="section-copy">
-          <p class="eyebrow" data-i18n="skillsEyebrow">Optional skills</p>
-          <h2 data-i18n="skillsTitle">Install workflows only when a repo needs them.</h2>
+          <p class="eyebrow" data-i18n="skillsEyebrow">Skills</p>
+          <h2 data-i18n="skillsTitle">Add only what you need.</h2>
           <p data-i18n="skillsBody">
-            Skills are not copied by default. Use --with-skills core for the full set, or pass one skill name to install only that workflow.
+            Default: none. Use --with-skills core or one skill name.
           </p>
         </div>
         <div class="skills-grid">
-          <article><span>01</span><h3>agent-docs-bootstrap</h3><p data-i18n="skillBootstrap">Create or repair the main agent docs using only facts found in the repo.</p></article>
-          <article><span>02</span><h3>template-maintainer</h3><p data-i18n="skillTemplate">Keep templates, README examples, architecture notes, and CLI behavior in sync.</p></article>
-          <article><span>03</span><h3>skill-author</h3><p data-i18n="skillAuthor">Write or review skills with clear triggers, steps, validation, and safety limits.</p></article>
-          <article><span>04</span><h3>bug-fix-recorder</h3><p data-i18n="skillBug">Record what broke, why it broke, how it was fixed, and how the fix was verified.</p></article>
-          <article><span>05</span><h3>repo-onboarding</h3><p data-i18n="skillRepo">Give a new agent a fact-based tour of files, entry points, tests, and risks.</p></article>
-          <article><span>06</span><h3>security-boundary-review</h3><p data-i18n="skillSecurity">Check scripts, installers, publishing, credentials, network calls, and unsafe writes.</p></article>
-          <article><span>07</span><h3>release-packaging</h3><p data-i18n="skillRelease">Review package contents, release layout, installer behavior, and post-install checks.</p></article>
-          <article><span>08</span><h3>agent-handoff</h3><p data-i18n="skillHandoff">Summarize paused or completed work so another maintainer can continue without guessing.</p></article>
+          <article><span>01</span><h3>agent-docs-bootstrap</h3><p data-i18n="skillBootstrap">Build docs from repo facts.</p></article>
+          <article><span>02</span><h3>template-maintainer</h3><p data-i18n="skillTemplate">Keep templates and CLI aligned.</p></article>
+          <article><span>03</span><h3>skill-author</h3><p data-i18n="skillAuthor">Write safe, clear skills.</p></article>
+          <article><span>04</span><h3>bug-fix-recorder</h3><p data-i18n="skillBug">Log cause, fix, verification.</p></article>
+          <article><span>05</span><h3>repo-onboarding</h3><p data-i18n="skillRepo">Map files, tests, risks.</p></article>
+          <article><span>06</span><h3>security-boundary-review</h3><p data-i18n="skillSecurity">Review security boundaries.</p></article>
+          <article><span>07</span><h3>release-packaging</h3><p data-i18n="skillRelease">Check package and installer.</p></article>
+          <article><span>08</span><h3>agent-handoff</h3><p data-i18n="skillHandoff">Hand off work clearly.</p></article>
         </div>
       </section>
 
       <section class="closing">
-        <p class="eyebrow" data-i18n="closingEyebrow">Open source ready</p>
-        <h2 data-i18n="closingTitle">Add the docs once. Let every future agent read them.</h2>
+        <p class="eyebrow" data-i18n="closingEyebrow">Open source</p>
+        <h2 data-i18n="closingTitle">Install. Generate. Commit.</h2>
         <div class="closing-actions">
-          <a class="button button-primary" href="https://github.com/henry-insomniac/insomniac-skills" data-i18n="closingGithub">View on GitHub</a>
-          <a class="button button-secondary" href="https://www.npmjs.com/package/insomniac-skills" data-i18n="closingNpm">Open npm package</a>
+          <a class="button button-primary" href="https://github.com/henry-insomniac/insomniac-skills" data-i18n="closingGithub">GitHub</a>
+          <a class="button button-secondary" href="https://www.npmjs.com/package/insomniac-skills" data-i18n="closingNpm">npm</a>
         </div>
       </section>
     </main>
@@ -200,152 +200,152 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
     <script>
       const copy = {
         en: {
-          navNpm: "npm",
+          navNpm: "Install",
           navOptions: "Options",
-          navAgent: "Agent Layer",
+          navAgent: "Structure",
           navSkills: "Skills",
-          heroEyebrow: "CLI for Agent project docs",
-          heroTitle: "Set up the docs agents need before they code.",
-          heroLead: "Run one command to add AGENTS.md, DESIGN.md, .claude notes, agent operating docs, and optional skills to any repo.",
-          heroPrimary: "See install command",
-          heroSecondary: "Open npm package",
-          stageTitle: "Files added to your repo",
-          stageState: "no overwrite by default",
-          stageAgents: "Where agents start",
-          stageDesign: "How UI should look",
-          stageClaude: "Project notes that last",
-          stageSkills: "Optional task workflows",
+          heroEyebrow: "Agent docs CLI",
+          heroTitle: "Create agent docs in one command.",
+          heroLead: "Add AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.",
+          heroPrimary: "Install",
+          heroSecondary: "npm",
+          stageTitle: "Writes",
+          stageState: "no overwrite",
+          stageAgents: "Start here",
+          stageDesign: "UI rules",
+          stageClaude: "Project context",
+          stageSkills: "Workflows",
           npmEyebrow: "Install",
-          npmTitle: "Run it once with npx, or install it as a command.",
-          npmBody: "Use npx for one-time setup, or install globally to get init-agent-docs in your terminal. The npm wrapper runs the Python initializer, so the machine needs python3.",
-          featuresEyebrow: "Why these files",
-          featuresTitle: "Agents work better when repo instructions are clear and close to the code.",
-          featureAgentsTitle: "Tell agents how to work in this repo.",
-          featureAgentsBody: "Put the project goal, must-read docs, validation rules, and collaboration norms in one first-read file.",
-          featureDesignTitle: "Give UI work a shared visual standard.",
-          featureDesignBody: "Document colors, type, spacing, components, and design boundaries before agents change screens.",
-          featureClaudeTitle: "Keep lasting context out of chat.",
-          featureClaudeBody: "Store architecture, tech stack, Git rules, skill authoring notes, and bug-fix history where future agents can read them.",
-          featureOpsTitle: "Make agent process visible.",
-          featureOpsBody: "Add issue tracker notes, triage labels, domain reading order, ADRs, and skill usage rules when the project needs them.",
-          optionsEyebrow: "Command flags",
-          optionsTitle: "Copy a command, then adjust the flags for your repo.",
-          optionsBody: "Existing files are protected by default. Use dry-run to preview changes, and use force only when you want to overwrite files.",
+          npmTitle: "Run with npx.",
+          npmBody: "One-time setup uses npx. Global install adds init-agent-docs. Requires python3.",
+          featuresEyebrow: "Files",
+          featuresTitle: "Clear repo rules. Fewer wrong edits.",
+          featureAgentsTitle: "Agent entrypoint.",
+          featureAgentsBody: "Goal, docs, rules, checks.",
+          featureDesignTitle: "UI rules.",
+          featureDesignBody: "Colors, type, spacing, components.",
+          featureClaudeTitle: "Long-term notes.",
+          featureClaudeBody: "Architecture, stack, Git, fixes.",
+          featureOpsTitle: "Operating docs.",
+          featureOpsBody: "Issues, triage, domain notes, ADRs.",
+          optionsEyebrow: "Flags",
+          optionsTitle: "Common options.",
+          optionsBody: "dry-run previews. force overwrites.",
           tableOption: "Option",
           tableDefault: "Default",
           tablePurpose: "Purpose",
-          defaultProjectName: "target folder name",
-          defaultDescription: "generic project description",
+          defaultProjectName: "folder name",
+          defaultDescription: "generic summary",
           defaultTemplates: "bundled templates",
           defaultSkills: "bundled skills",
           defaultOff: "off",
           defaultToday: "today",
-          optTarget: "Choose the repo or folder to update.",
-          optProjectName: "Set the project name shown in generated docs.",
-          optDescription: "Add a short project description to the docs.",
-          optTemplateDir: "Generate docs from your own template folder.",
-          optSkillsDir: "Load skill profiles from your own skills folder.",
-          optWithSkills: "Copy a skill profile or a named skill into .agents/skills/.",
-          optAgentOps: "Add docs for issue tracking, triage labels, domain notes, ADRs, and skill usage.",
-          optDesign: "Add DESIGN.md so UI changes have a shared design reference.",
-          optIssueTracker: "Set the issue tracker style: auto, github, gitlab, local, or manual.",
-          optDomainLayout: "Choose how domain notes are organized: single, multi, or claude-only.",
-          optListSkills: "List available skill profiles and skills, then exit.",
-          optDate: "Set the date written into generated docs. Use YYYY-MM-DD when possible.",
-          optForce: "Overwrite files that already exist in the target repo.",
-          optDryRun: "Preview the files that would be written without changing anything.",
-          agentEyebrow: "Repo structure",
-          agentTitle: "Each file has one job, so agents know where to look.",
-          agentBody: "AGENTS.md tells agents how to start. DESIGN.md tells them how UI should look. .claude stores durable project notes. docs/agents describes operating process. skills/core stays optional.",
-          skillsEyebrow: "Optional skills",
-          skillsTitle: "Install workflows only when a repo needs them.",
-          skillsBody: "Skills are not copied by default. Use --with-skills core for the full set, or pass one skill name to install only that workflow.",
-          skillBootstrap: "Create or repair the main agent docs using only facts found in the repo.",
-          skillTemplate: "Keep templates, README examples, architecture notes, and CLI behavior in sync.",
-          skillAuthor: "Write or review skills with clear triggers, steps, validation, and safety limits.",
-          skillBug: "Record what broke, why it broke, how it was fixed, and how the fix was verified.",
-          skillRepo: "Give a new agent a fact-based tour of files, entry points, tests, and risks.",
-          skillSecurity: "Check scripts, installers, publishing, credentials, network calls, and unsafe writes.",
-          skillRelease: "Review package contents, release layout, installer behavior, and post-install checks.",
-          skillHandoff: "Summarize paused or completed work so another maintainer can continue without guessing.",
-          closingEyebrow: "Open source ready",
-          closingTitle: "Add the docs once. Let every future agent read them.",
-          closingGithub: "View on GitHub",
-          closingNpm: "Open npm package"
+          optTarget: "Repo to update.",
+          optProjectName: "Name in docs.",
+          optDescription: "Project summary.",
+          optTemplateDir: "Custom templates.",
+          optSkillsDir: "Custom skills source.",
+          optWithSkills: "Copy skills.",
+          optAgentOps: "Add ops docs.",
+          optDesign: "Add DESIGN.md.",
+          optIssueTracker: "Issue tracker style.",
+          optDomainLayout: "Domain docs layout.",
+          optListSkills: "Show skills.",
+          optDate: "Date in docs.",
+          optForce: "Overwrite files.",
+          optDryRun: "Preview only.",
+          agentEyebrow: "Structure",
+          agentTitle: "One file, one job.",
+          agentBody: "AGENTS.md: start. DESIGN.md: UI. .claude: context. docs/agents: process. skills/core: optional.",
+          skillsEyebrow: "Skills",
+          skillsTitle: "Add only what you need.",
+          skillsBody: "Default: none. Use --with-skills core or one skill name.",
+          skillBootstrap: "Build docs from repo facts.",
+          skillTemplate: "Keep templates and CLI aligned.",
+          skillAuthor: "Write safe, clear skills.",
+          skillBug: "Log cause, fix, verification.",
+          skillRepo: "Map files, tests, risks.",
+          skillSecurity: "Review security boundaries.",
+          skillRelease: "Check package and installer.",
+          skillHandoff: "Hand off work clearly.",
+          closingEyebrow: "Open source",
+          closingTitle: "Install. Generate. Commit.",
+          closingGithub: "GitHub",
+          closingNpm: "npm"
         },
         zh: {
-          navNpm: "npm",
+          navNpm: "安装",
           navOptions: "参数",
-          navAgent: "Agent 层",
+          navAgent: "结构",
           navSkills: "Skills",
-          heroEyebrow: "Agent 项目文档 CLI",
-          heroTitle: "先把 Agent 写代码需要的文档建好。",
-          heroLead: "在任意仓库运行一个命令，生成 AGENTS.md、DESIGN.md、.claude 长期说明、Agent 操作文档和可选 skills。",
-          heroPrimary: "查看安装命令",
-          heroSecondary: "打开 npm 包",
-          stageTitle: "会写入这些文件",
-          stageState: "默认不覆盖已有文件",
-          stageAgents: "Agent 从这里开始读",
-          stageDesign: "界面应该怎么设计",
-          stageClaude: "长期项目说明",
-          stageSkills: "可选任务工作流",
+          heroEyebrow: "Agent 文档 CLI",
+          heroTitle: "一条命令，生成 Agent 文档。",
+          heroLead: "写入 AGENTS.md、DESIGN.md、.claude、docs/agents 和可选 skills。",
+          heroPrimary: "安装",
+          heroSecondary: "npm",
+          stageTitle: "写入",
+          stageState: "默认不覆盖",
+          stageAgents: "入口",
+          stageDesign: "UI 规则",
+          stageClaude: "项目上下文",
+          stageSkills: "工作流",
           npmEyebrow: "安装",
-          npmTitle: "可以直接 npx 运行，也可以全局安装成命令。",
-          npmBody: "一次性初始化用 npx；常用就全局安装，终端会得到 init-agent-docs 命令。npm wrapper 会调用 Python 初始化器，所以机器需要有 python3。",
-          featuresEyebrow: "为什么要这些文件",
-          featuresTitle: "Agent 的规则越靠近代码，越不容易乱改。",
-          featureAgentsTitle: "告诉 Agent 在这个仓库怎么工作。",
-          featureAgentsBody: "把项目目标、必读文档、验证规则和协作约定放进一个首读文件。",
-          featureDesignTitle: "给 UI 修改一个统一设计标准。",
-          featureDesignBody: "在 Agent 改界面前，先写清颜色、字体、间距、组件规则和设计边界。",
-          featureClaudeTitle: "把长期上下文从聊天里拿出来。",
-          featureClaudeBody: "架构、技术栈、Git 规则、skill 编写说明和 bug 修复记录都留在仓库里，后续 Agent 能继续读。",
-          featureOpsTitle: "让 Agent 流程看得见。",
-          featureOpsBody: "项目需要时，再生成 issue 追踪、triage 标签、领域阅读顺序、ADR 和 skill 使用规范。",
-          optionsEyebrow: "命令参数",
-          optionsTitle: "先复制命令，再按仓库情况调整参数。",
-          optionsBody: "默认保护已有文件。用 dry-run 先看会写什么；只有确定要覆盖时才用 force。",
+          npmTitle: "直接 npx 运行。",
+          npmBody: "一次性用 npx。全局安装会增加 init-agent-docs。需要 python3。",
+          featuresEyebrow: "文件",
+          featuresTitle: "规则进仓库，Agent 少乱改。",
+          featureAgentsTitle: "Agent 入口。",
+          featureAgentsBody: "目标、文档、规则、检查。",
+          featureDesignTitle: "UI 规则。",
+          featureDesignBody: "颜色、字体、间距、组件。",
+          featureClaudeTitle: "长期说明。",
+          featureClaudeBody: "架构、技术栈、Git、修复记录。",
+          featureOpsTitle: "操作文档。",
+          featureOpsBody: "issue、triage、领域说明、ADR。",
+          optionsEyebrow: "参数",
+          optionsTitle: "常用参数。",
+          optionsBody: "dry-run 预览。force 覆盖。",
           tableOption: "参数",
           tableDefault: "默认值",
           tablePurpose: "用途",
-          defaultProjectName: "目标文件夹名",
-          defaultDescription: "通用项目描述",
+          defaultProjectName: "文件夹名",
+          defaultDescription: "通用简介",
           defaultTemplates: "内置模板",
           defaultSkills: "内置 skills",
           defaultOff: "关闭",
           defaultToday: "当天",
-          optTarget: "选择要更新的仓库或文件夹。",
-          optProjectName: "设置生成文档里显示的项目名称。",
-          optDescription: "给生成文档写入一句项目简介。",
-          optTemplateDir: "从你自己的模板目录生成文档。",
-          optSkillsDir: "从你自己的 skills 目录读取 profile。",
-          optWithSkills: "把一个 skill profile 或指定 skill 复制到 .agents/skills/。",
-          optAgentOps: "增加 issue 追踪、triage 标签、领域说明、ADR 和 skill 使用文档。",
-          optDesign: "增加 DESIGN.md，让 UI 修改有统一设计参考。",
-          optIssueTracker: "设置 issue 追踪方式：auto、github、gitlab、local 或 manual。",
-          optDomainLayout: "选择领域说明组织方式：single、multi 或 claude-only。",
-          optListSkills: "列出可用 skill profiles 和 skills 后退出。",
-          optDate: "设置写入文档的日期，推荐 YYYY-MM-DD。",
-          optForce: "覆盖目标仓库里已经存在的文件。",
-          optDryRun: "只预览会写入哪些文件，不真正修改仓库。",
-          agentEyebrow: "仓库结构",
-          agentTitle: "每类文件只做一件事，Agent 才知道去哪读。",
-          agentBody: "AGENTS.md 告诉 Agent 怎么开始；DESIGN.md 说明 UI 怎么设计；.claude 保存长期项目说明；docs/agents 描述操作流程；skills/core 保持可选。",
-          skillsEyebrow: "可选 skills",
-          skillsTitle: "仓库需要什么工作流，就安装什么。",
-          skillsBody: "默认不复制任何 skill。使用 --with-skills core 安装完整集合，也可以传入单个 skill 名称只安装那一个。",
-          skillBootstrap: "基于仓库真实内容创建或修复主要 Agent 文档。",
-          skillTemplate: "保持模板、README 示例、架构说明和 CLI 行为一致。",
-          skillAuthor: "编写或评审 skill，明确触发条件、步骤、验证方式和安全边界。",
-          skillBug: "记录什么坏了、为什么坏、怎么修、怎么验证。",
-          skillRepo: "给新 Agent 一份基于事实的仓库导览：文件、入口、测试和风险。",
-          skillSecurity: "检查脚本、安装器、发布、凭据、网络调用和危险写入。",
-          skillRelease: "检查包内容、发布结构、安装器行为和安装后验证。",
-          skillHandoff: "总结暂停或完成的工作，让后续维护者不用猜也能接上。",
-          closingEyebrow: "适合开源发布",
-          closingTitle: "先把文档放进仓库。以后每个 Agent 都能读。",
-          closingGithub: "查看 GitHub",
-          closingNpm: "打开 npm 包"
+          optTarget: "目标仓库。",
+          optProjectName: "文档中的项目名。",
+          optDescription: "项目简介。",
+          optTemplateDir: "自定义模板。",
+          optSkillsDir: "自定义 skill 来源。",
+          optWithSkills: "复制 skills。",
+          optAgentOps: "增加操作文档。",
+          optDesign: "增加 DESIGN.md。",
+          optIssueTracker: "issue 工具。",
+          optDomainLayout: "领域文档布局。",
+          optListSkills: "显示 skills。",
+          optDate: "写入日期。",
+          optForce: "覆盖文件。",
+          optDryRun: "只预览。",
+          agentEyebrow: "结构",
+          agentTitle: "一类文件，一件事。",
+          agentBody: "AGENTS.md：入口。DESIGN.md：UI。.claude：上下文。docs/agents：流程。skills/core：可选。",
+          skillsEyebrow: "Skills",
+          skillsTitle: "只装需要的工作流。",
+          skillsBody: "默认不安装。用 --with-skills core 或单个 skill 名称。",
+          skillBootstrap: "生成/修复 Agent 文档。",
+          skillTemplate: "同步模板和 CLI。",
+          skillAuthor: "编写安全清晰的 skills。",
+          skillBug: "记录原因、修复、验证。",
+          skillRepo: "梳理文件、测试、风险。",
+          skillSecurity: "检查安全边界。",
+          skillRelease: "检查包和安装器。",
+          skillHandoff: "清楚交接工作。",
+          closingEyebrow: "开源",
+          closingTitle: "安装。生成。提交。",
+          closingGithub: "GitHub",
+          closingNpm: "npm"
         }
       };
 

@@ -29,7 +29,7 @@
 
 - `templates/agent-docs/` 保存输出模板。
 - `scripts/init_agent_docs.py` 负责把模板初始化到目标项目。
-- `bin/init-agent-docs.js` 提供 npm package 的 CLI wrapper，调用同一份 Python 初始化脚本。
+- `bin/init-agent-docs.js` 和 `bin/insomniac-skills.js` 提供 npm package 的 CLI wrapper，调用同一份 Python 初始化脚本；`isk init` 是推荐短入口。
 - `package.json` 保存 npm 包名、bin 映射、打包白名单和维护脚本。
 - `docs/` 保存 GitHub Pages 静态项目主页。
 - `.github/workflows/pages.yml` 负责把 `docs/` 部署到 GitHub Pages。

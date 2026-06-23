@@ -37,9 +37,9 @@
 
 `install.sh` 是 curl 安装入口，使用 POSIX shell 编写，依赖 `python3`，下载阶段需要 `curl` 或 `wget`。
 
-`bin/init-agent-docs.js` 是 npm CLI wrapper，使用 Node.js 标准库调用 `scripts/init_agent_docs.py`。它不应复制模板渲染、skills 安装或 issue tracker 检测逻辑。
+`bin/init-agent-docs.js` 和 `bin/insomniac-skills.js` 是 npm CLI wrapper，使用 Node.js 标准库调用 `scripts/init_agent_docs.py`。`isk init` 是推荐短入口，`insomniac-skills init-agent-docs` 和 `init-agent-docs` 是兼容入口。wrapper 不应复制模板渲染、skills 安装或 issue tracker 检测逻辑；共享执行逻辑应放在 `bin/run-init-agent-docs.js`。
 
-`package.json` 负责 npm 包名、`bin` 映射、`files` 白名单和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。
+`package.json` 负责 npm 包名、`bin` 映射、`files` 白名单、MIT license 元数据和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。
 
 `docs/` 是 GitHub Pages 静态站点，使用原生 HTML/CSS，不需要前端构建工具。`.github/workflows/pages.yml` 使用 GitHub 官方 Pages Actions 部署该目录。
 
@@ -91,12 +91,15 @@ python3 -m unittest discover -s tests
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-design --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-agent-ops --issue-tracker auto --domain-layout single --force
+python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --description "一个测试项目" --with-agent-ops --issue-tracker --domain-layout single --force
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --dry-run
 python3 scripts/init_agent_docs.py --list-skills
 python3 scripts/init_agent_docs.py --target /tmp/agent-docs-test --project-name demo --with-skills core --force
 npm test
 npm run pack:check
+npm exec --package . -- isk init --help
 npm exec --package . -- init-agent-docs --help
+npm exec --package . -- insomniac-skills init-agent-docs --help
 python3 -m http.server 4173 --directory docs
 sh install.sh
 ```

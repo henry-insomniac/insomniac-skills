@@ -27,7 +27,9 @@
 │   └── workflows/
 │       └── pages.yml
 ├── bin/
-│   └── init-agent-docs.js
+│   ├── init-agent-docs.js
+│   ├── insomniac-skills.js
+│   └── run-init-agent-docs.js
 ├── docs/
 │   ├── index.html
 │   ├── styles.css
@@ -94,11 +96,11 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 
 ### `package.json`
 
-npm 分发入口。记录包名、版本、`bin` 命令映射、打包白名单和维护脚本。npm 包只应包含运行所需文件，不包含 `server/`、`tests/` 或 curl 安装脚本。
+npm 分发入口。记录包名、版本、`bin` 命令映射、MIT license、打包白名单和维护脚本。npm 包只应包含运行所需文件，不包含 `server/`、`tests/` 或 curl 安装脚本。
 
-### `bin/init-agent-docs.js`
+### `bin/`
 
-npm CLI wrapper。它不重新实现脚手架逻辑，只负责查找并调用 `scripts/init_agent_docs.py`，把参数原样传给 Python CLI。这样 npm、curl 和仓库内运行共享同一份核心实现。
+npm CLI wrapper。`init-agent-docs.js` 提供直接命令，`insomniac-skills.js` 提供包名主命令和短命令 `isk`，并分发到 `init-agent-docs` / `init` 子命令；`run-init-agent-docs.js` 负责查找并调用 `scripts/init_agent_docs.py`。wrapper 不重新实现模板渲染、skills 安装或 issue tracker 检测逻辑。
 
 ### `docs/`
 
@@ -114,9 +116,11 @@ GitHub Pages 部署 workflow。它在 `main` 分支上 `docs/**` 或 workflow �
 
 当前支持的初始化参数：
 
-- `--with-design`：生成根目录 `DESIGN.md`，并在 `AGENTS.md` 与 `.claude/README.md` 中加入 UI 任务读取提示。
-- `--with-agent-ops`：生成 `docs/agents/*`、`docs/adr/README.md`，并根据领域布局生成 `CONTEXT.md` 或 `CONTEXT-MAP.md`。
-- `--issue-tracker manual|auto|github|gitlab|local`：生成 issue tracker 操作规则。`auto` 读取目标项目 `.git/config`，检测 GitHub 或 GitLab remote；`local` 额外生成 `.scratch/README.md`。
+- `--name` / `--project-name`：设置项目名。
+- `--desc` / `--description`：设置项目描述。
+- `--design` / `--with-design`：生成根目录 `DESIGN.md`，并在 `AGENTS.md` 与 `.claude/README.md` 中加入 UI 任务读取提示。
+- `--ops` / `--with-agent-ops`：生成 `docs/agents/*`、`docs/adr/README.md`，并根据领域布局生成 `CONTEXT.md` 或 `CONTEXT-MAP.md`。
+- `--issues [manual|auto|github|gitlab|local]` / `--issue-tracker [...]`：生成 issue tracker 操作规则。默认不传时为 `manual`；显式传入但不带值时等同 `auto`。`auto` 读取目标项目 `.git/config`，检测 GitHub 或 GitLab remote；`local` 额外生成 `.scratch/README.md`。
 - `--domain-layout single|multi|claude-only`：选择领域上下文布局。`single` 生成 `CONTEXT.md`，`multi` 生成 `CONTEXT-MAP.md`，`claude-only` 只依赖 `AGENTS.md` 和 `.claude/`，不生成 `CONTEXT*`。
 
 当前支持的 skill 安装参数：
@@ -179,10 +183,10 @@ CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的�
 1. 维护者更新 `scripts/init_agent_docs.py`、模板、skills 或 wrapper。
 2. 运行 Python CLI 集成测试和 npm wrapper 测试。
 3. 运行 `npm pack --dry-run --json`，确认包内容只包含运行所需文件。
-4. 运行 `npm exec --package . -- init-agent-docs --help`，确认本地 npm 包入口可执行。
+4. 运行 `npm exec --package . -- isk init --help`、`npm exec --package . -- init-agent-docs --help` 和 `npm exec --package . -- insomniac-skills init-agent-docs --help`，确认本地 npm 包入口可执行。
 5. 登录 npm 后执行 `npm publish`。
 
-当前 npm 包名规划为 `insomniac-skills`，CLI 命令名为 `init-agent-docs`。如果 npm registry 上包名被占用，应优先改包名而不是改命令名。
+当前 npm 包名为 `insomniac-skills`，CLI 推荐 `isk init`，并兼容 `insomniac-skills init-agent-docs` 和 `init-agent-docs`。如果 npm registry 上包名被占用，应优先改包名，并保留 `isk` 和直接命令名。
 
 ## GitHub Pages 发布流程
 

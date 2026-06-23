@@ -29,11 +29,15 @@ def parse_args() -> argparse.Namespace:
         help="Target project directory. Defaults to current working directory.",
     )
     parser.add_argument(
+        "--name",
         "--project-name",
+        dest="project_name",
         help="Project name. Defaults to target directory name.",
     )
     parser.add_argument(
+        "--desc",
         "--description",
+        dest="description",
         default="这是一个需要维护长期 Agent 上下文的项目。",
         help="Project description used in generated documents.",
     )
@@ -58,7 +62,9 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--ops",
         "--with-agent-ops",
+        dest="with_agent_ops",
         action="store_true",
         help=(
             "Create Agent operating docs such as docs/agents/*, "
@@ -66,17 +72,24 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--design",
         "--with-design",
+        dest="with_design",
         action="store_true",
         help="Create a root DESIGN.md visual system guide for UI work.",
     )
     parser.add_argument(
+        "--issues",
         "--issue-tracker",
+        dest="issue_tracker",
+        nargs="?",
+        const="auto",
         choices=["auto", "github", "gitlab", "local", "manual"],
         default="manual",
+        metavar="{auto,github,gitlab,local,manual}",
         help=(
             "Issue tracker docs to generate with --with-agent-ops. "
-            "Use auto to inspect the target git remote."
+            "Use auto, or omit the value, to inspect the target git remote."
         ),
     )
     parser.add_argument(

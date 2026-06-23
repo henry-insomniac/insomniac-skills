@@ -12,6 +12,7 @@ import unittest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "scripts" / "init_agent_docs.py"
 NPM_WRAPPER = REPO_ROOT / "bin" / "init-agent-docs.js"
+PACKAGE_WRAPPER = REPO_ROOT / "bin" / "insomniac-skills.js"
 
 
 class InitAgentDocsCliTests(unittest.TestCase):
@@ -75,6 +76,35 @@ class InitAgentDocsCliTests(unittest.TestCase):
             agents = (target / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("DESIGN.md", agents)
 
+    def test_short_init_options_generate_design_and_agent_ops_docs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "demo"
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--target",
+                    str(target),
+                    "--name",
+                    "demo",
+                    "--desc",
+                    "一个测试项目",
+                    "--design",
+                    "--issues",
+                    "--ops",
+                ],
+                cwd=REPO_ROOT,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue((target / "AGENTS.md").is_file())
+            self.assertTrue((target / "DESIGN.md").is_file())
+            self.assertTrue((target / "docs" / "agents" / "issue-tracker.md").is_file())
+
     def test_default_init_does_not_create_design_guidance(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "demo"
@@ -134,6 +164,36 @@ class InitAgentDocsCliTests(unittest.TestCase):
                 "--with-agent-ops",
                 "--issue-tracker",
                 "auto",
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            issue_tracker = (
+                target / "docs" / "agents" / "issue-tracker.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("GitHub Issues", issue_tracker)
+            self.assertIn("gh issue create", issue_tracker)
+
+    def test_bare_issue_tracker_flag_defaults_to_auto_detection(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "demo"
+            target.mkdir()
+            subprocess.run(["git", "init"], cwd=target, check=True, stdout=subprocess.PIPE)
+            subprocess.run(
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "origin",
+                    "git@github.com:example/demo.git",
+                ],
+                cwd=target,
+                check=True,
+            )
+
+            result = self.run_init(
+                target,
+                "--with-agent-ops",
+                "--issue-tracker",
             )
 
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -235,6 +295,48 @@ class InitAgentDocsNpmWrapperTests(unittest.TestCase):
         self.assertIn("Initialize AGENTS.md", result.stdout)
         self.assertIn("--with-design", result.stdout)
 
+    @unittest.skipUnless(shutil.which("node"), "node is required for npm wrapper tests")
+    def test_package_wrapper_dispatches_init_agent_docs(self) -> None:
+        result = subprocess.run(
+            ["node", str(PACKAGE_WRAPPER), "init-agent-docs", "--help"],
+            cwd=REPO_ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Initialize AGENTS.md", result.stdout)
+        self.assertIn("--with-agent-ops", result.stdout)
+
+    @unittest.skipUnless(shutil.which("node"), "node is required for npm wrapper tests")
+    def test_package_wrapper_dispatches_short_init_command(self) -> None:
+        result = subprocess.run(
+            ["node", str(PACKAGE_WRAPPER), "init", "--help"],
+            cwd=REPO_ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Initialize AGENTS.md", result.stdout)
+        self.assertIn("--with-agent-ops", result.stdout)
+
+    @unittest.skipUnless(shutil.which("node"), "node is required for npm wrapper tests")
+    def test_package_wrapper_prints_top_level_help(self) -> None:
+        result = subprocess.run(
+            ["node", str(PACKAGE_WRAPPER), "--help"],
+            cwd=REPO_ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Usage: insomniac-skills", result.stdout)
+        self.assertIn("init-agent-docs", result.stdout)
+
     @unittest.skipUnless(shutil.which("npm"), "npm is required for package tests")
     def test_npm_package_contains_runtime_files_only(self) -> None:
         result = subprocess.run(
@@ -251,7 +353,10 @@ class InitAgentDocsNpmWrapperTests(unittest.TestCase):
 
         self.assertIn("package.json", files)
         self.assertIn("bin/init-agent-docs.js", files)
+        self.assertIn("bin/insomniac-skills.js", files)
+        self.assertIn("bin/run-init-agent-docs.js", files)
         self.assertIn("scripts/init_agent_docs.py", files)
+        self.assertIn("LICENSE", files)
         self.assertIn("templates/agent-docs/AGENTS.md", files)
         self.assertIn("templates/agent-docs/DESIGN.md", files)
         self.assertIn("skills/registry.json", files)
@@ -262,10 +367,50 @@ class InitAgentDocsNpmWrapperTests(unittest.TestCase):
             any("__pycache__" in path or path.endswith(".pyc") for path in files)
         )
 
+    def test_npm_package_declares_mit_license(self) -> None:
+        package = json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(package["license"], "MIT")
+
     @unittest.skipUnless(shutil.which("npm"), "npm is required for package tests")
     def test_npm_exec_runs_packaged_cli(self) -> None:
         result = subprocess.run(
             ["npm", "exec", "--package", ".", "--", "init-agent-docs", "--help"],
+            cwd=REPO_ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("--with-design", result.stdout)
+
+    @unittest.skipUnless(shutil.which("npm"), "npm is required for package tests")
+    def test_npm_exec_runs_packaged_package_command(self) -> None:
+        result = subprocess.run(
+            [
+                "npm",
+                "exec",
+                "--package",
+                ".",
+                "--",
+                "insomniac-skills",
+                "init-agent-docs",
+                "--help",
+            ],
+            cwd=REPO_ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("--with-design", result.stdout)
+
+    @unittest.skipUnless(shutil.which("npm"), "npm is required for package tests")
+    def test_npm_exec_runs_short_package_command(self) -> None:
+        result = subprocess.run(
+            ["npm", "exec", "--package", ".", "--", "isk", "init", "--help"],
             cwd=REPO_ROOT,
             text=True,
             stdout=subprocess.PIPE,

@@ -6,7 +6,7 @@
     <title>insomniac-skills - Agent docs CLI</title>
     <meta
       name="description"
-      content="Create AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills with one npm command."
+      content="MIT-licensed CLI for creating AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills with one npm command."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -36,7 +36,7 @@
           <p class="eyebrow" data-i18n="heroEyebrow">Agent docs CLI</p>
           <h1 data-i18n="heroTitle">Create agent docs in one command.</h1>
           <p class="lead" data-i18n="heroLead">
-            Add AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.
+            MIT-licensed CLI for AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#npm" data-i18n="heroPrimary">Install</a>
@@ -75,16 +75,16 @@
           <p class="eyebrow" data-i18n="npmEyebrow">Install</p>
           <h2 data-i18n="npmTitle">Run with npx.</h2>
           <p data-i18n="npmBody">
-            One-time setup uses npx. Global install adds init-agent-docs. Requires python3.
+            One-time setup uses npx. Global install adds isk, insomniac-skills, and init-agent-docs. Requires python3.
           </p>
         </div>
         <div class="command-showcase">
           <div class="terminal-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-          <pre><code>npx -p insomniac-skills init-agent-docs --help</code></pre>
+          <pre><code>npx -p insomniac-skills isk init --help</code></pre>
           <pre><code>npm install -g insomniac-skills
-init-agent-docs --project-name my-project</code></pre>
+isk init --name my-project</code></pre>
           <pre><code>npm install -D insomniac-skills
-npx init-agent-docs --with-design --with-agent-ops</code></pre>
+npx isk init --design --ops</code></pre>
         </div>
       </section>
 
@@ -136,14 +136,14 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
             </thead>
             <tbody>
               <tr><td><code>--target TARGET</code></td><td><code>.</code></td><td data-i18n="optTarget">Repo to update.</td></tr>
-              <tr><td><code>--project-name PROJECT_NAME</code></td><td data-i18n="defaultProjectName">folder name</td><td data-i18n="optProjectName">Name in docs.</td></tr>
-              <tr><td><code>--description DESCRIPTION</code></td><td data-i18n="defaultDescription">generic summary</td><td data-i18n="optDescription">Project summary.</td></tr>
+              <tr><td><code>--name NAME</code></td><td data-i18n="defaultProjectName">folder name</td><td data-i18n="optProjectName">Name in docs.</td></tr>
+              <tr><td><code>--desc DESC</code></td><td data-i18n="defaultDescription">generic summary</td><td data-i18n="optDescription">Project summary.</td></tr>
               <tr><td><code>--template-dir TEMPLATE_DIR</code></td><td data-i18n="defaultTemplates">bundled templates</td><td data-i18n="optTemplateDir">Custom templates.</td></tr>
               <tr><td><code>--skills-dir SKILLS_DIR</code></td><td data-i18n="defaultSkills">bundled skills</td><td data-i18n="optSkillsDir">Custom skills source.</td></tr>
               <tr><td><code>--with-skills PROFILE_OR_SKILL</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optWithSkills">Copy skills.</td></tr>
-              <tr><td><code>--with-agent-ops</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optAgentOps">Add ops docs.</td></tr>
-              <tr><td><code>--with-design</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDesign">Add DESIGN.md.</td></tr>
-              <tr><td><code>--issue-tracker</code></td><td><code>manual</code></td><td data-i18n="optIssueTracker">Issue tracker style.</td></tr>
+              <tr><td><code>--ops</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optAgentOps">Add ops docs.</td></tr>
+              <tr><td><code>--design</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optDesign">Add DESIGN.md.</td></tr>
+              <tr><td><code>--issues [TYPE]</code></td><td><code>manual</code></td><td data-i18n="optIssueTracker">Issue tracker style. Bare flag auto-detects.</td></tr>
               <tr><td><code>--domain-layout</code></td><td><code>single</code></td><td data-i18n="optDomainLayout">Domain docs layout.</td></tr>
               <tr><td><code>--list-skills</code></td><td data-i18n="defaultOff">off</td><td data-i18n="optListSkills">Show skills.</td></tr>
               <tr><td><code>--date DATE</code></td><td data-i18n="defaultToday">today</td><td data-i18n="optDate">Date in docs.</td></tr>
@@ -188,7 +188,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
       </section>
 
       <section class="closing">
-        <p class="eyebrow" data-i18n="closingEyebrow">Open source</p>
+        <p class="eyebrow" data-i18n="closingEyebrow">MIT License</p>
         <h2 data-i18n="closingTitle">Install. Generate. Commit.</h2>
         <div class="closing-actions">
           <a class="button button-primary" href="https://github.com/henry-insomniac/insomniac-skills" data-i18n="closingGithub">GitHub</a>
@@ -206,7 +206,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           navSkills: "Skills",
           heroEyebrow: "Agent docs CLI",
           heroTitle: "Create agent docs in one command.",
-          heroLead: "Add AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.",
+          heroLead: "MIT-licensed CLI for AGENTS.md, DESIGN.md, .claude, docs/agents, and optional skills.",
           heroPrimary: "Install",
           heroSecondary: "npm",
           stageTitle: "Writes",
@@ -217,7 +217,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           stageSkills: "Workflows",
           npmEyebrow: "Install",
           npmTitle: "Run with npx.",
-          npmBody: "One-time setup uses npx. Global install adds init-agent-docs. Requires python3.",
+          npmBody: "One-time setup uses npx. Global install adds isk, insomniac-skills, and init-agent-docs. Requires python3.",
           featuresEyebrow: "Files",
           featuresTitle: "Clear repo rules. Fewer wrong edits.",
           featureAgentsTitle: "Agent entrypoint.",
@@ -248,7 +248,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           optWithSkills: "Copy skills.",
           optAgentOps: "Add ops docs.",
           optDesign: "Add DESIGN.md.",
-          optIssueTracker: "Issue tracker style.",
+          optIssueTracker: "Issue tracker style. Bare flag auto-detects.",
           optDomainLayout: "Domain docs layout.",
           optListSkills: "Show skills.",
           optDate: "Date in docs.",
@@ -268,7 +268,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           skillSecurity: "Review security boundaries.",
           skillRelease: "Check package and installer.",
           skillHandoff: "Hand off work clearly.",
-          closingEyebrow: "Open source",
+          closingEyebrow: "MIT License",
           closingTitle: "Install. Generate. Commit.",
           closingGithub: "GitHub",
           closingNpm: "npm"
@@ -280,7 +280,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           navSkills: "Skills",
           heroEyebrow: "Agent 文档 CLI",
           heroTitle: "一条命令，生成 Agent 文档。",
-          heroLead: "写入 AGENTS.md、DESIGN.md、.claude、docs/agents 和可选 skills。",
+          heroLead: "MIT 许可的 CLI，用于写入 AGENTS.md、DESIGN.md、.claude、docs/agents 和可选 skills。",
           heroPrimary: "安装",
           heroSecondary: "npm",
           stageTitle: "写入",
@@ -291,7 +291,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           stageSkills: "工作流",
           npmEyebrow: "安装",
           npmTitle: "直接 npx 运行。",
-          npmBody: "一次性用 npx。全局安装会增加 init-agent-docs。需要 python3。",
+          npmBody: "一次性用 npx。全局安装会增加 isk、insomniac-skills 和 init-agent-docs。需要 python3。",
           featuresEyebrow: "文件",
           featuresTitle: "规则进仓库，Agent 少乱改。",
           featureAgentsTitle: "Agent 入口。",
@@ -322,7 +322,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           optWithSkills: "复制 skills。",
           optAgentOps: "增加操作文档。",
           optDesign: "增加 DESIGN.md。",
-          optIssueTracker: "issue 工具。",
+          optIssueTracker: "issue 工具；裸参数自动检测。",
           optDomainLayout: "领域文档布局。",
           optListSkills: "显示 skills。",
           optDate: "写入日期。",
@@ -342,7 +342,7 @@ npx init-agent-docs --with-design --with-agent-ops</code></pre>
           skillSecurity: "检查安全边界。",
           skillRelease: "检查包和安装器。",
           skillHandoff: "清楚交接工作。",
-          closingEyebrow: "开源",
+          closingEyebrow: "MIT 许可",
           closingTitle: "安装。生成。提交。",
           closingGithub: "GitHub",
           closingNpm: "npm"

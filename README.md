@@ -2,6 +2,8 @@
 
 Scaffold reusable project-level Agent collaboration docs and operating context.
 
+If you find this project interesting, a GitHub star is appreciated. If you have ideas, please open an issue.
+
 中文文档: [README.zh-CN.md](README.zh-CN.md)
 
 ## Generated Files

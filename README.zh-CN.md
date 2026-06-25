@@ -2,6 +2,8 @@
 
 用于初始化项目级 Agent 协作文档和操作上下文的脚手架。
 
+如果你觉得这个项目有趣，欢迎给一个 GitHub star；如果你有想法，欢迎提出 issue。
+
 English README: [README.md](README.md)
 
 ## 生成内容

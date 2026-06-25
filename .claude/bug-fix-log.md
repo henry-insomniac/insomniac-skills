@@ -34,6 +34,35 @@
 
 ## 修复记录
 
+## 2026-06-26 - npm 发布拒绝覆盖已发布版本
+
+### 现象
+
+执行 `npm publish` 时，npm 报错：`You cannot publish over the previously published versions: 0.1.5.`。
+
+### 影响
+
+GitHub 已包含新的英文 README、中文 README 和 npm description，但 npm registry 仍停留在 `0.1.5`，导致 npm 页面和安装包元数据没有更新。
+
+### 原因
+
+`0.1.5` 已经发布到 npm registry。npm 版本是不可覆盖的，同一个版本号不能再次发布，即使包内容发生了变化。
+
+### 修复
+
+将 `package.json` 版本从 `0.1.5` 提升到 `0.1.6`，作为 README 双语拆分和 npm description 更新的发布版本。
+
+### 验证
+
+- `npm view insomniac-skills versions --json`
+- `git diff --check`
+- `npm test`
+- `npm run pack:check`
+
+### 后续
+
+当前机器执行 `npm whoami` 返回 `E401 Unauthorized`，需要恢复 npm 登录后再执行 `npm publish`。
+
 ## 2026-06-23 - CLI 命令和常用参数过长
 
 ### 现象

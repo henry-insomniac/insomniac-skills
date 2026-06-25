@@ -1,7 +1,7 @@
 {
   "name": "insomniac-skills",
   "version": "0.1.5",
-  "description": "Initialize reusable Agent collaboration docs for projects.",
+  "description": "Scaffold reusable project-level Agent collaboration docs and operating context.",
   "bin": {
     "init-agent-docs": "bin/init-agent-docs.js",
     "insomniac-skills": "bin/insomniac-skills.js",
@@ -14,6 +14,7 @@
     "skills/",
     "LICENSE",
     "README.md",
+    "README.zh-CN.md",
     "AGENTS.md"
   ],
   "scripts": {

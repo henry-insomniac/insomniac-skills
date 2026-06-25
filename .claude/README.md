@@ -14,10 +14,10 @@
 
 - 修改项目结构时，同步更新 `project-architecture.md`。
 - 新增、删除或重命名 skill 时，同步更新 `skill-authoring.md` 中的相关约定或示例。
-- 调整可安装 skill profile 或 registry 字段时，同步更新 `skill-authoring.md` 和 `README.md`。
-- 调整初始化 CLI 参数、模板占位符或输出结构时，同步更新 `project-architecture.md`、`tech-stack.md` 和 `README.md`。
-- 调整 `DESIGN.md` 模板、`--with-design` 参数或设计系统输出规则时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md` 和测试。
-- 调整 npm wrapper、`package.json`、包内容白名单或发布脚本时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md` 和 npm wrapper 测试。
+- 调整可安装 skill profile 或 registry 字段时，同步更新 `skill-authoring.md`、`README.md` 和 `README.zh-CN.md`。
+- 调整初始化 CLI 参数、模板占位符或输出结构时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md` 和 `README.zh-CN.md`。
+- 调整 `DESIGN.md` 模板、`--with-design` 参数或设计系统输出规则时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md`、`README.zh-CN.md` 和测试。
+- 调整 npm wrapper、`package.json`、包内容白名单或发布脚本时，同步更新 `project-architecture.md`、`tech-stack.md`、`README.md`、`README.zh-CN.md` 和 npm wrapper 测试。
 - 调整 GitHub Pages 开源项目主页时，同步更新 `project-architecture.md`、`tech-stack.md` 和站点验证记录。
 - 修复 bug 后，同步更新 `bug-fix-log.md`。
 - 调整协作流程时，同步更新 `git-collaboration.md`。
@@ -30,7 +30,7 @@
 - `templates/agent-docs/` 保存输出模板。
 - `scripts/init_agent_docs.py` 负责把模板初始化到目标项目。
 - `bin/init-agent-docs.js` 和 `bin/insomniac-skills.js` 提供 npm package 的 CLI wrapper，调用同一份 Python 初始化脚本；`isk init` 是推荐短入口。
-- `package.json` 保存 npm 包名、bin 映射、打包白名单和维护脚本。
+- `package.json` 保存 npm 包名、英文 description、bin 映射、打包白名单和维护脚本。
 - `docs/` 保存 GitHub Pages 静态项目主页。
 - `.github/workflows/pages.yml` 负责把 `docs/` 部署到 GitHub Pages。
 - `tests/` 通过 CLI 集成测试验证初始化输出结构。
@@ -38,4 +38,4 @@
 - `--with-agent-ops` 可选生成 `docs/agents/`、`CONTEXT.md` / `CONTEXT-MAP.md`、`docs/adr/` 和本地 `.scratch/` 工作区说明。
 - `skills/core/` 保存本项目维护的可选 core skills。
 - `skills/registry.json` 保存可安装 skill 和 profile 元数据。
-- `README.md` 提供使用入口。
+- `README.md` 提供英文 GitHub/npm 主入口，并链接 `README.zh-CN.md` 中文文档。

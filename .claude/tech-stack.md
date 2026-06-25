@@ -7,7 +7,8 @@
 ## 文档规范
 
 - 主要文档使用 Markdown。
-- 中文为主，命令、文件名、API、包名保留英文原文。
+- 项目长期上下文文档中文为主，命令、文件名、API、包名保留英文原文。
+- 根 `README.md` 是 GitHub/npm 默认展示的英文主文档，必须链接 `README.zh-CN.md`；中文版本维护在 `README.zh-CN.md`。
 - 文件名使用小写短横线，顶层约定文件除外，例如 `AGENTS.md`。
 - 文档标题层级从一个一级标题开始，不跳级。
 - 命令、路径、环境变量使用反引号标记。
@@ -17,7 +18,7 @@
 - 脚手架模板位于 `templates/agent-docs/`。
 - 模板中的路径结构应和目标项目输出结构一致。
 - 模板支持 `{{PROJECT_NAME}}`、`{{PROJECT_DESCRIPTION}}`、`{{DATE}}`、`{{AGENT_SKILLS_BLOCK}}`、`{{DESIGN_GUIDANCE_BLOCK}}`、`{{DESIGN_ARCHITECTURE_BLOCK}}`、`{{DESIGN_TECH_STACK_BLOCK}}`、`{{ISSUE_TRACKER_CONTENT}}` 和 `{{DOMAIN_DOCS_CONTENT}}`。
-- 新增占位符必须同步更新 `scripts/init_agent_docs.py` 和 `README.md`。
+- 新增占位符必须同步更新 `scripts/init_agent_docs.py`、`README.md` 和 `README.zh-CN.md`。
 - 模板内容应保持通用，不写入单个项目、账号或个人机器的真实细节。
 - 初始化脚本会跳过 `.DS_Store`、`._*` 和 `__pycache__`，避免本地系统元数据污染输出。
 - `DESIGN.md` 属于可选设计系统入口，默认不写入；启用 `--with-design` 后生成，并在入口文档中加入 UI 任务读取提示。
@@ -39,7 +40,7 @@
 
 `bin/init-agent-docs.js` 和 `bin/insomniac-skills.js` 是 npm CLI wrapper，使用 Node.js 标准库调用 `scripts/init_agent_docs.py`。`isk init` 是推荐短入口，`insomniac-skills init-agent-docs` 和 `init-agent-docs` 是兼容入口。wrapper 不应复制模板渲染、skills 安装或 issue tracker 检测逻辑；共享执行逻辑应放在 `bin/run-init-agent-docs.js`。
 
-`package.json` 负责 npm 包名、`bin` 映射、`files` 白名单、MIT license 元数据和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。
+`package.json` 负责 npm 包名、英文 `description`、`bin` 映射、`files` 白名单、MIT license 元数据和维护脚本。npm 包不应包含 `server/`、`tests/`、curl 安装脚本或部署凭据。`README.md` 和 `README.zh-CN.md` 都应进入 `files` 白名单。
 
 `docs/` 是 GitHub Pages 静态站点，使用原生 HTML/CSS，不需要前端构建工具。`.github/workflows/pages.yml` 使用 GitHub 官方 Pages Actions 部署该目录。
 

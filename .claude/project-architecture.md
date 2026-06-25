@@ -22,6 +22,7 @@
 ├── AGENTS.md
 ├── DESIGN.md
 ├── README.md
+├── README.zh-CN.md
 ├── package.json
 ├── .github/
 │   └── workflows/
@@ -90,13 +91,13 @@ Agent 入口文件。用于说明项目目标、协作原则和关键文档索�
 
 项目长期上下文目录。这里保存架构、规范、协作流程和故障记录，避免重要信息散落在对话或临时笔记中。
 
-### `README.md`
+### `README.md` / `README.zh-CN.md`
 
-脚手架的人类使用入口。说明初始化命令、覆盖策略、模板位置和维护方式。
+脚手架的人类使用入口。`README.md` 是 GitHub 和 npm 默认展示的英文主文档，并链接 `README.zh-CN.md`；`README.zh-CN.md` 保存中文版本。两份文档应同步说明初始化命令、覆盖策略、模板位置和维护方式。
 
 ### `package.json`
 
-npm 分发入口。记录包名、版本、`bin` 命令映射、MIT license、打包白名单和维护脚本。npm 包只应包含运行所需文件，不包含 `server/`、`tests/` 或 curl 安装脚本。
+npm 分发入口。记录包名、版本、英文 description、`bin` 命令映射、MIT license、打包白名单和维护脚本。npm 包只应包含运行所需文件，不包含 `server/`、`tests/` 或 curl 安装脚本。根 `README.md` 和 `README.zh-CN.md` 都应包含在包内容白名单中，便于 npm 用户查看中英文文档。
 
 ### `bin/`
 
@@ -204,7 +205,7 @@ CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的�
 - 默认不覆盖已有文件，覆盖必须显式开启。
 - 脚手架只初始化长期上下文，不替目标项目推断不存在的架构。
 - Agent 操作规则层可以检测 GitHub/GitLab remote，但不会在默认 manual 模式假设 issue tracker。
-- 新增模板占位符时，必须同步更新脚本和 `README.md`。
+- 新增模板占位符时，必须同步更新脚本、`README.md` 和 `README.zh-CN.md`。
 - 对外部工具、账号、网络、密钥有依赖的流程必须写明前置条件和失败处理。
 - 第三方开源 skills 不默认安装；必须先进入 registry，记录来源、版本、许可证、权限边界和审计状态，再通过显式 profile 或 skill 名称安装。
 
@@ -220,3 +221,4 @@ CLI 集成测试目录。测试通过 `python3 scripts/init_agent_docs.py` 的�
 | 2026-06-23 | 增加可选 `DESIGN.md` 输出 | 为 UI 任务提供独立视觉系统入口，同时保持默认脚手架通用 | 已新增 `--with-design`、模板和 CLI 集成测试 |
 | 2026-06-23 | 增加 npm wrapper 和 package 元数据 | 支持通过 npm/npx 使用同一份 Python CLI | 已新增 package metadata、Node wrapper、npm pack 和 npm exec 测试 |
 | 2026-06-23 | 增加 GitHub Pages 开源项目主页 | 对外展示功能、命令参数、Agent 层和 skill 列表 | 已新增 `docs/` 静态站点和 Pages workflow |
+| 2026-06-26 | 拆分中英文 README 并更新 npm description | GitHub/npm 默认展示英文文档，同时保留中文入口 | 已更新 `README.md`、`README.zh-CN.md`、`package.json` 和包内容白名单 |

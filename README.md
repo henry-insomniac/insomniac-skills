@@ -10,9 +10,9 @@ If you find this project interesting, a GitHub star is appreciated. If you have 
 
 By default, the CLI generates:
 
-- `AGENTS.md`
+- `AGENTS.md`: Default rules for organizing changes by business responsibility and respecting module boundaries.
 - `.claude/README.md`
-- `.claude/project-architecture.md`
+- `.claude/project-architecture.md`: A template for recording module responsibilities, data ownership, allowed dependencies, and key workflows. It does not prescribe a language or directory layout.
 - `.claude/skill-authoring.md`
 - `.claude/bug-fix-log.md`
 - `.claude/git-collaboration.md`

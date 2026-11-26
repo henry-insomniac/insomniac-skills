@@ -1,6 +1,6 @@
 {
   "name": "insomniac-skills",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Scaffold reusable project-level Agent collaboration docs and operating context.",
   "bin": {
     "init-agent-docs": "bin/init-agent-docs.js",

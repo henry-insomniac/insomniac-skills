@@ -10,9 +10,9 @@ English README: [README.md](README.md)
 
 默认会在目标项目中生成：
 
-- `AGENTS.md`
+- `AGENTS.md`：默认要求 Agent 按业务职责修改代码，遵守模块边界。
 - `.claude/README.md`
-- `.claude/project-architecture.md`
+- `.claude/project-architecture.md`：按项目实际情况记录模块职责、数据归属、允许的依赖和关键流程，不限定语言或目录布局。
 - `.claude/skill-authoring.md`
 - `.claude/bug-fix-log.md`
 - `.claude/git-collaboration.md`

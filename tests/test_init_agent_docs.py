@@ -35,6 +35,23 @@ class InitAgentDocsCliTests(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
 
+    def test_default_init_includes_architecture_rules_and_module_map(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "demo"
+            result = self.run_init(target)
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("## 代码架构约束", agents)
+            self.assertIn("归属模块", agents)
+            self.assertIn("公开操作", agents)
+            architecture = (target / ".claude" / "project-architecture.md").read_text(
+                encoding="utf-8"
+            )
+            for field in ("业务职责", "数据归属", "对外操作", "允许依赖", "关键业务流程"):
+                with self.subTest(field=field):
+                    self.assertIn(field, architecture)
+
     def test_with_agent_ops_creates_agent_operating_docs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "demo"
